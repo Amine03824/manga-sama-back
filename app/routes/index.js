@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import des sous routeurs
-const listingRouter = require('./listings'); 
+const articleController = require('./articles'); 
 const categoryRouter = require('./categories');
 const userRouter = require('./users');
 const mangaRouter = require('./mangas');

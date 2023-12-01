@@ -3,15 +3,15 @@
 // const router = express.Router();
 
 // Routes correspondant aux annonces
-// router.route('/listing')
-//   .get(listingsController.getAll)
-//   .post(listingsController.create);
+// router.route('/article')
+//   .get(articleController.getAll)
+//   .post(articleController.create);
 
 // Routes correspondant à une annonce spécifique
 // router.route('/listing/:id')
-//   .get(listingController.getOneListingById)
-//   .patch(listingController.updateOneListingById)
-//   .delete(listingController.deleteOneListingById)
+//   .get(articleController.getOneListingById)
+//   .patch(articleController.updateOneListingById)
+//   .delete(articleController.deleteOneListingById)
 
 
 // Export

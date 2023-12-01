@@ -1,1 +1,129 @@
--- SQLBook: Code
+BEGIN;
+
+
+-- Suppression des tables si elles existaient déjà
+
+DROP TABLE IF EXISTS "user", "role", "manga", "category", "article", "condition";
+
+-- Création des tables
+
+-- Création du domaine email afin de valider et d'améliorer la consistence de données 
+CREATE DOMAIN email_domain AS VARCHAR(255);
+-- La clause CHECK impose une contrainte sur les valeurs de la colonne email_domain
+CHECK (VALUE ~* '^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$');
+
+-- -----------------------------------------------------
+--             Table des utilisateurs                 --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "user" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
+  "lastname" VARCHAR(30) NOT NULL DEFAULT,
+  "firstname" VARCHAR(30) NOT NULL DEFAULT,
+  "pseudo" VARCHAR(30) NOT NULL DEFAULT,
+  "birthdate" DATE,
+  "address" TEXT,
+  "zip_code" TEXT,
+  "city" TEXT,
+  "phone_number" INT,
+  "email" email_domain NOT NULL,
+  "password" VARCHAR(255) NOT NULL DEFAULT,
+  "role_id" INTEGER NOT NULL,  -- on ne peut pas tout de suite indiquer que cette clé est une clé étrangère qui fait référence à la table role, puisque la table role n'existe pas encore ! (on le fera plus tard)
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
+
+-- -----------------------------------------------------
+--     Table des rôles associés aux utilisateurs      --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "role" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
+  "role_name" VARCHAR(30) NOT NULL DEFAULT,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
+
+-- -----------------------------------------------------
+--                  Table de mangas                   --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "manga" (
+  "code_ISBN" VARCHAR(16) NOT NULL PRIMARY KEY,
+  "title" VARCHAR(255) NOT NULL,
+  "year_publication" YEAR NOT NULL ,
+  "author" VARCHAR(30) NOT NULL,
+  "description" TEXT NOT NULL,
+  "cover_url" TEXT,
+  "category_id" INTEGER NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
+
+-- -----------------------------------------------------
+--                  Table de catégories               --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "category" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "name" VARCHAR(30) NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
+
+-- -----------------------------------------------------
+--                 Table des annonces                 --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "article" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
+  "title" VARCHAR(255) NOT NULL DEFAULT,
+  "description" TEXT NOT NULL DEFAULT,
+  "price" INT,
+  "transaction_id" UUID DEFAULT uuid_generate_v4(),
+  "date_transaction" DATE,
+  "state_completion" VARCHAR(30),
+  "image_url" VARCHAR(255),
+  "condition_id" INTEGER NOT NULL REFERENCES "condition"("id"),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ   
+);
+
+-- -----------------------------------------------------
+--         Table d'état des mangas mis en vente       --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "condition" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY, 
+  "condition_name" VARCHAR(30) NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
+
+-- -----------------------------------------------------
+--               Ajout des clés étrangères            --
+-- -----------------------------------------------------
+-- Maintenant on peut créer la référence vers la table question pour le champ "role_id" dans la table "user" afin de réprésenter notre clé étrangère.
+-- On remarquera ici la présence de l'instruction FOREIGN KEY qui dit explicitement que cette colonne sert de clé étrangère faisaint référence à la table question
+-- Lors de la création d'une table ce détail est implicite.
+ALTER TABLE "user"
+  ADD FOREIGN KEY ("role_id") REFERENCES "role" ("id");
+
+ALTER TABLE "manga"
+  ADD FOREIGN KEY ("category_id") REFERENCES "category" ("id");
+
+ALTER TABLE "article"
+  ADD FOREIGN KEY ("condition_id") REFERENCES "condition" ("id");
+
+-- -----------------------------------------------------
+--                 Tables d'association               --
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "user_has_article" (
+  "user_id" INTEGER NOT NULL REFERENCES "user" ("id"),
+  "article_id" INTEGER NOT NULL REFERENCES "article" ("id"),
+  PRIMARY KEY ("user_id", "article_id")
+);
+
+CREATE TABLE IF NOT EXISTS "manga_has_article" (
+  "manga_code_ISBN" VARCHAR(16) NOT NULL REFERENCES "manga" ("code_ISBN"),
+  "article_id" INTEGER NOT NULL REFERENCES "article" ("id"),
+  PRIMARY KEY ("manga_code_ISBN", "article_id")
+);
+
+
+-- Pour mettre fin au bloc de transaction et l'exécuter
+COMMIT;

@@ -2,52 +2,81 @@
 
 ## 🌿 Last branch standing : Setup Manga API + Database
 
-### Connexion à l'utilisateur postgres en mode superutilisateur
+## Instructions PostgreSQL pour la gestion de la base de données
+
+### Cas Local
+
+### Création des tables
+
+Pour créer les tables dans la base de données locale, utilisez la commande suivante :
 
 ```bash
-sudo -i -u postgres psql
+psql -U <utilisateur_local> -d <nom_base_de_données_local> -f data/create_tables.sql
 ```
 
-### Connexion à la base de données locale
+### Remplissage des tables
+
+Pour ajouter des données aux tables locales, exécutez la commande :
 
 ```bash
-psql -d nom_de_ta_base_de_donnees -U ton_utilisateur_postgres -h localhost
+psql -U <utilisateur_local> -d <nom_base_de_données_local> -f data/populate_tables.sql
 ```
 
-### Sauvegarde de la base de données locale avec pg_dump
+### Sauvegarde de la base de données
+
+Si tu souhaites sauvegarder la base de données locale, utilise la commande :
 
 ```bash
-pg_dump -h localhost -U ton_utilisateur_postgres -W nom_de_ta_base_de_donnees > lenomsurledisque
+pg_dump -U <utilisateur_local> -d <nom_base_de_données_local> > backup.sql
 ```
 
-### Sauvegarde de la base de données distante avec pg_dump
+### Restauration de la base de données depuis une sauvegarde
+
+Pour restaurer la base de données locale depuis une sauvegarde, utilisez la commande :
 
 ```bash
-pg_dump -h adresse_du_serveur_distante -U ton_utilisateur_postgres -W nom_de_ta_base_de_donnees > lenomsurledisque
+psql -U <utilisateur_local> -d <nom_base_de_données_local> < backup.sql
 ```
 
-### Import du backup dans une base de données locale
+### Cas Distant
+
+### Création des tables
+
+Pour créer les tables dans la base de données à distance, utilisez la commande suivante :
 
 ```bash
-psql -d nom_de_ta_base_de_donnees -U ton_utilisateur_postgres -h localhost < lenomsurledisque
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" -f data/create_tables.sql
 ```
 
-### Import du backup dans une base de données distante
+### Remplissage des tables
+
+Pour ajouter des données aux tables à distance, exécutez la commande :
 
 ```bash
-psql -d nom_de_ta_base_de_donnees -U ton_utilisateur_postgres -h adresse_du_serveur_distante < lenomsurledisque
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" -f data/populate_tables.sql
 ```
 
-remplacer les valeurs des variables (`nom_de_ta_base_de_donnees`, `ton_utilisateur_postgres`, `lenomsurledisque`, `adresse_du_serveur_distante`) par les valeurs appropriées.
+### Sauvegarde de la base de données
 
-```postgres
-postgres=# CREATE USER "admin" WITH password 'manga';
-CREATE ROLE
-postgres=# CREATE DATABASE mangadb WITH OWNER admin;
-CREATE DATABASE
-```
+Si tu souhaites sauvegarder la base de données à distance, utilise la commande :
 
 ```bash
-psql -U admin -d mangadb -f data/create_tables.sql
-psql -U admin -d mangadb -f populate_tables.sql -h localhost
+pg_dump "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" > backup.sql
+```
+
+### Restauration de la base de données depuis une sauvegarde
+
+Pour restaurer la base de données à distance depuis une sauvegarde, utilisez la commande :
+
+```bash
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" < backup.sql
+```
+
+### Réinitialisation du schéma (optionnel)
+
+Pour réinitialiser le schéma dans la base de données à distance, utilisez les commandes suivantes :
+
+```bash
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" -c "DROP SCHEMA public CASCADE;"
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" -c "CREATE SCHEMA public;"
 ```

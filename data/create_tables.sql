@@ -4,6 +4,7 @@ BEGIN;
 -- Suppression des tables si elles existaient déjà
 
 DROP TABLE IF EXISTS "user", "role", "manga", "category", "article", "condition" CASCADE;
+DROP DOMAIN IF EXISTS email_domain;
 
 -- Création des tables
 
@@ -22,7 +23,6 @@ CREATE TABLE IF NOT EXISTS "user" (
   "zip_code" TEXT,
   "city" TEXT,
   "phone_number" INT,
-  -- La clause CHECK impose une contrainte sur les valeurs de la colonne email_domain
   "email" email_domain CHECK (email ~* '^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$') NOT NULL,
   "password" VARCHAR(255) NOT NULL,
   "role_id" INTEGER NOT NULL,  -- on ne peut pas tout de suite indiquer que cette clé est une clé étrangère qui fait référence à la table role, puisque la table role n'existe pas encore ! (on le fera plus tard)
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS "role" (
 --                  Table de mangas                   --
 -- 
 CREATE TABLE IF NOT EXISTS "manga" (
-  "code_ISBN" VARCHAR(30) NOT NULL PRIMARY KEY,
+  "code_isbn" VARCHAR(30) NOT NULL PRIMARY KEY,
   "title" VARCHAR(255) NOT NULL,
   "volume" INTEGER NOT NULL,
   "year_publication" INTEGER NOT NULL ,
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS "user_has_article" (
 );
 
 CREATE TABLE IF NOT EXISTS "manga_has_article" (
-  "manga_code_ISBN" VARCHAR(16) NOT NULL REFERENCES "manga" ("code_ISBN") ON DELETE CASCADE,
+  "manga_code_isbn" VARCHAR(16) NOT NULL REFERENCES "manga" ("code_isbn") ON DELETE CASCADE,
   "article_id" INTEGER NOT NULL REFERENCES "article" ("id") ON DELETE CASCADE,
-  PRIMARY KEY ("manga_code_ISBN", "article_id")
+  PRIMARY KEY ("manga_code_isbn", "article_id")
 );
 
 

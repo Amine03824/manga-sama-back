@@ -25,8 +25,6 @@ const mangaRouter = require('./mangas');
 
 //  Routes correspondant aux mangas dans la base de données
 router.use('/manga', mangaRouter);
-router.use('/manga/:id', mangaRouter);
-
 // // Routes correspondant à l'état des mangas
 // router.use('/condition', conditionRouter);
 // router.use('/condition/:id', conditionRouter);

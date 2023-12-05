@@ -1,19 +1,20 @@
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
-const client = new Client({
-  connectionString: process.env.PG_URL
+const pool = new Pool({
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  ssl: require,
 });
 
 async function connectToDatabase() {
   try {
-    await client.connect();
+    await pool.connect();
     console.log("🗃️  Connecté à la base de données PostgreSQL");
   } catch (error) {
-    console.log(
-      "🟠 Erreur de connexion à la base de données :",
-      error
-    );
+    console.log("🟠 Erreur de connexion à la base de données :", error);
   }
 }
 
-module.exports = { client, connectToDatabase };
+module.exports = { pool, connectToDatabase };

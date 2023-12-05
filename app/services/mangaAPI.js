@@ -4,17 +4,13 @@ const cheerio = require("cheerio");
 const path = require("path");
 
 // Fonction principale asynchrone
-async function main() {
-  // Récupérer l'ISBN à partir des arguments de ligne de commande
-  const isbn = process.argv[2];
-
-  // Vérifier si l'ISBN est fourni
+async function getMangaInfo(isbn) {
+  // Vérifier si l'isbn est fourni
   if (!isbn) {
-    console.error("Veuillez fournir un ISBN en tant qu'argument.");
-    process.exit(1);
+    console.error("Veuillez fournir un isbn en tant qu'argument.");
   }
 
-  // Construire l'URL en utilisant l'ISBN
+  // Construire l'URL en utilisant l'isbn
   const url = `https://www.decitre.fr/livres/${isbn}.html`;
 
   // Fonction pour télécharger la page HTML de manière asynchrone
@@ -33,7 +29,6 @@ async function main() {
         "Erreur lors du téléchargement de la page HTML :",
         error.message
       );
-      process.exit(1);
     }
   }
 
@@ -48,7 +43,7 @@ async function main() {
     // Récupérer le titre du livre en excluant le contenu de la balise <span class="format">
     const title = $(".fp-top--main-info .product-title")
       .contents()
-      .filter(function () {
+      .filter(function() {
         return this.nodeType === 3; // Filtrer les nœuds de texte
       })
       .text()
@@ -65,11 +60,13 @@ async function main() {
     // Fonction pour extraire les noms des auteurs
     function extractAuthors() {
       const authorElements = $(".authors.authors--main h2 a");
-      const authors = authorElements.map(function () {
-        return $(this).text().trim();
-      }).get();
+      const authors = authorElements
+        .map(function() {
+          return $(this).text().trim();
+        })
+        .get();
 
-      return authors.join(', ');
+      return authors.join(", ");
     }
     // Appeler la fonction pour extraire les noms des auteurs
     const mainAuthor = extractAuthors();
@@ -79,21 +76,29 @@ async function main() {
       const imageUrl = `https://products-images.di-static.com/image/cover/${isbn}-475x500-${model}.jpg`;
 
       try {
-        const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+        const response = await axios.get(imageUrl, {
+          responseType: "arraybuffer"
+        });
 
         // Chemin où tu veux sauvegarder l'image localement (ajuste le chemin selon ta structure de projet)
-        const imagePath = path.join(__dirname, "../../public/images/", `${isbn}.jpg`);
+        const imagePath = path.join(
+          __dirname,
+          "../../public/images/",
+          `${isbn}.jpg`
+        );
 
         // Sauvegarde de l'image localement avec le nouveau nom
         fs.writeFileSync(imagePath, response.data, "binary");
 
-        return imagePath.replace(__dirname, ''); // Retourne le chemin local de l'image avec le nouveau nom
+        return imagePath.replace(__dirname, ""); // Retourne le chemin local de l'image avec le nouveau nom
       } catch (error) {
-        console.error(`Erreur lors du téléchargement de l'image avec le modèle ${model}:`, error.message);
+        console.error(
+          `Erreur lors du téléchargement de l'image avec le modèle ${model}:`,
+          error.message
+        );
         return null; // Retourne null en cas d'erreur
       }
     }
-
 
     // Fonction pour récupérer l'image de couverture
     async function getCoverImage(isbn) {
@@ -102,7 +107,11 @@ async function main() {
 
       // Essayer chaque modèle en séquence
       for (const model of modelsToTry) {
-        const imagePath = path.join(__dirname, "../../public/images/", `${isbn}-${model}.jpg`);
+        const imagePath = path.join(
+          __dirname,
+          "../../public/images/",
+          `${isbn}-${model}.jpg`
+        );
 
         // Vérifier si l'image existe déjà localement
         if (fs.existsSync(imagePath)) {
@@ -120,7 +129,6 @@ async function main() {
       return null;
     }
 
-
     // Appeler la fonction pour récupérer l'image de couverture
     const localImageUrl = await getCoverImage(isbn);
 
@@ -128,35 +136,53 @@ async function main() {
     const description = $("#resume .content").text().trim();
 
     // Récupérer la date de parution
-    const publicationDate = $('.information:contains("Date de parution") .value')
+    const publicationDate = $(
+      '.information:contains("Date de parution") .value'
+    )
       .text()
       .trim();
 
     // Extraire l'année de la date (supposant que le format est toujours dd/mm/yyyy)
-    const year = publicationDate.split('/')[2];
+    const year = publicationDate.split("/")[2];
 
+    // Mapping des noms de catégories aux ID correspondants
+    const categoryMapping = {
+      Shonen: 1,
+      Seinen: 2,
+      Shojo: 3,
+      Josei: 4,
+      Kodomo: 5,
+      Seijin: 6
+    };
     // Récupérer le genre du livre avec le nouveau sélecteur
-    const genre = $('#main_breadcrumb > ul > li:last-child > a > span')
+    const genre = $("#main_breadcrumb > ul > li:last-child > a > span")
       .text()
       .trim();
 
     // Utiliser une expression régulière pour extraire le dernier mot
     const lastWordMatch = genre.match(/\b(\w+)\b$/);
-    const lastWord = lastWordMatch ? lastWordMatch[1] : ''; // Le dernier mot trouvé
+    const lastWord = lastWordMatch ? lastWordMatch[1] : ""; // Le dernier mot trouvé
 
     // Mettre la première lettre en majuscule
     const formattedGenre = lastWord.charAt(0).toUpperCase() + lastWord.slice(1);
 
+    // Trouver l'ID de la catégorie correspondant au genre dans le mapping
+    const categoryId = categoryMapping[formattedGenre];
+    // Condition pour gérer le cas où la catégorie n'est pas détectée
+    if (categoryId === undefined) {
+      console.error("Catégorie non reconnue :", formattedGenre);
+      return null;
+    }
     // Retourner un objet contenant toutes les informations du livre
     return {
-      code_ISBN : isbn,
+      code_isbn: parseInt(isbn),
       title,
-      volume : volumeNumber,
-      year_publication : year,
+      volume: parseInt(volumeNumber),
+      year_publication: parseInt(year),
       author: mainAuthor,
       description,
-      cover_url : localImageUrl,
-      genre: formattedGenre,
+      cover_url: localImageUrl,
+      category_id: categoryId
     };
   }
 
@@ -167,5 +193,6 @@ async function main() {
   console.log("Informations du livre :", extractedBookInfo);
 }
 
-// Appeler la fonction principale pour extraire les informations
-main();
+module.exports = {
+  getMangaInfo
+};

@@ -3,12 +3,12 @@
 // const router = express.Router();
 
 // Route correspondant aux utilisateurs
-// router.route('/user')
+// router.route('/')
 //  .get(userController.getAll)
 //  .post(userController.create)
 
 // Route correspondant à un utilisateur spécifique
-// router.route('/user/:id')
+// router.route('/:id')
 //  .get(userController.getOneUserById)
 //  .path(userController.updateOneUserById)
 //  .delete(userController.deleteOneUserById)

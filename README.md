@@ -30,6 +30,12 @@ Si tu souhaites sauvegarder la base de données locale, utilise la commande :
 pg_dump -U <utilisateur_local> -d <nom_base_de_données_local> > backup.sql
 ```
 
+Si tu souhaites sauvegarder toutes les bases de données utilise la commande : 
+
+```bash
+pg_dumpall -U postgres -f /chemin/vers/ma_sauvegarde.sql
+```
+
 ### Restauration de la base de données depuis une sauvegarde
 
 Pour restaurer la base de données locale depuis une sauvegarde, utilisez la commande :

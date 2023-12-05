@@ -3,10 +3,10 @@ const {pool} = require('../config/database');
 const mangaDataMapper = {
   // Récupère tous les mangas de la base de données
   findAllMangas: async () => {
-    const sql = "SELECT * FROM manga ORDER BY name ASC";
+    const sql = "SELECT * FROM manga ORDER BY title ASC";
     const result = await pool.query(sql);
     if (!result.rowCount) {
-      throw new Error("Aucun manga trouvé");
+      throw new Error("Aucun manga trouvé dans la base de données");
     }
     return result.rows;
   },
@@ -22,7 +22,7 @@ const mangaDataMapper = {
     category_id}) => 
   {
     const sql = {
-      text : "INSERT INTO manga (\"code_isbn\", title, volume, year_publication, author, description, cover_url, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;",
+      text : "INSERT INTO manga (code_isbn, title, volume, year_publication, author, description, cover_url, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;",
       values : [
         code_isbn,
         title,
@@ -35,24 +35,58 @@ const mangaDataMapper = {
     };
     const result = await pool.query(sql);
     if (!result.rowCount) {
-      throw new Error("Aucun manga trouvé");
+      throw new Error("Aucun manga trouvé dans la base de données");
     }
     return result.rows[0];
   },
-  // ou ici nous pourrions gérer les erreurs avec un try and catch
-  // voir ce qui est le plus optimal
-  //  AllMangas: async () => {
-  //     try{
-  //     const sql = "SELECT * FROM manga ORDER BY name ASC";
-  //     const result = await pool.query(sql);
 
-  //     return result.rows;
-  //   } catch (error) {
+  // Met à jour les informations d'un manga dans la base de données
+  updateOneManga: async ({
+    code_isbn,
+    title,
+    volume,
+    year_publication,
+    author,
+    description,
+    cover_url,
+    category_id
+  }) => {
+    const sql = {
+      text: `
+      UPDATE manga
+      SET
+        title = $2,
+        volume = $3,
+        year_publication = $4,
+        author = $5,
+        description = $6,
+        cover_url = $7,
+        category_id = $8
+      WHERE
+        code_isbn = $1
+      RETURNING *;
+    `,
+      values: [
+        code_isbn,
+        title,
+        volume,
+        year_publication,
+        author,
+        description,
+        cover_url,
+        category_id
+      ]
+    };
 
-  //     console.error("Erreur lors des la récupération des mangas :", error.message);
-  //     throw error;
+    const result = await pool.query(sql);
 
-  // }
+    if (!result.rowCount) {
+      throw new Error("Aucun manga trouvé pour la mise à jour dans la base de données");
+    }
+
+    return result.rows[0];
+  },
+
 
   // Récupère un manga par son code isbn
   findOneMangaById: async (code_isbn) => {
@@ -62,7 +96,7 @@ const mangaDataMapper = {
     };
     const result = await pool.query(sql);
     if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
+      throw new Error("Aucun manga correspondant dans la base de données");
     }
     return result.rows[0];
   },
@@ -74,173 +108,13 @@ const mangaDataMapper = {
       values: [code_isbn]
     };
     const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-  },
+    if (result.rowCount === 1) {
+      return { success: true };
+    } else {
+      console.log(result);
+      console.log("Aucun manga correspondant dans la base de données");
 
-  // Met à jour le titre d'un manga par son code isbn
-  updateOneMangaTitleById: async (newTitle, code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET title = $1 WHERE code_isbn = $2 ",
-      values: [newTitle, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
     }
-    return result.rows[0];
-  },
-
-  // Met à jour le numéro de volume d'un manga par son code isbn
-  updateOneMangaVolumenNumberById: async (newVolumeNumber, code_isbn) => {
-    const sql = {
-      text: " UPDATE manga SET volume = $1 WHERE code_isbn = $2 ",
-      values: [newVolumeNumber, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
-  },
-
-  // Met à jour l'année de publication d'un manga par son code isbn
-  updateOneMangaYearOfPublicationById: async (newYearOfPublication,code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET year_publication = $1 WHERE code_isbn = $2 ",
-      values: [newYearOfPublication, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
-  },
-
-  // Met à jour l'auteur d'un manga par son code isbn
-  updateOneMangaAuthorById: async (newAuthor, code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET author = $1 WHERE code_isbn = $2 ",
-      values: [newAuthor, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
-  },
-
-  // Met à jour la description d'un manga par son code isbn
-  updateOneMangaDescriptionById: async (newDescription, code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET description = $1 WHERE code_isbn = $2 ",
-      values: [newDescription, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
-  },
-
-  // Met à jour l'URL de la couverture d'un manga par son code isbn
-  updateOneMangaCoverUrlById: async (newCoverUrl, code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET cover_url =$1 WHERE code_isbn = $2 ",
-      values: [newCoverUrl, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
-  },
-
-  // Met à jour la catégorie d'un manga par son code isbn
-  updateOneMangaCategoryById: async (newCategory, code_isbn) => {
-    const sql = {
-      text: "UPDATE manga SET category_id = $1 WHERE code_isbn = $2 ",
-      values: [newCategory, code_isbn]
-    };
-    const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant");
-    }
-    return result.rows[0];
   }
 };
-
 module.exports = mangaDataMapper;
-
-//
-// const db = require('../config/database');
-
-// const mangaDataMapper = {
-//   findAllMangas: async () => {
-//     const sql = "SELECT * FROM manga ORDER BY name ASC";
-//     const result = await pool.query(sql);
-//     if (!result.rowCount) {
-//       throw new Error('Aucun manga trouvé');
-//     }
-//     return result.rows;
-//   },
-
-//   findOneMangaById: async (code_isbn) => {
-//     return findOneMangaByField('code_isbn', code_isbn);
-//   },
-
-//   updateOneMangaFieldById: async (code_isbn, fieldToUpdate, newValue) => {
-//     return updateMangaFieldById('code_isbn', code_isbn, fieldToUpdate, newValue);
-//   },
-// };
-
-// // Fonction utilitaire pour trouver un manga par un champ spécifique
-// async function findOneMangaByField(fieldName, value) {
-//   const query = {
-//     text: `SELECT * FROM manga WHERE ${fieldName} = $1`,
-//     values: [value]
-//   };
-//   const result = await pool.query(query);
-//   if (!result.rowCount) {
-//     throw new Error("Aucun manga correspondant");
-//   }
-//   return result.rows[0];
-// }
-
-// // Fonction utilitaire pour mettre à jour un champ spécifique d'un manga par ID
-// async function updateMangaFieldById(
-//   idFieldName,
-//   idValue,
-//   fieldToUpdate,
-//   newValue
-// ) {
-//   const query = {
-//     text: `UPDATE manga SET ${fieldToUpdate} = $1 WHERE ${idFieldName} = $2 RETURNING *`,
-//     values: [newValue, idValue]
-//   };
-//   const result = await pool.query(query);
-//   if (!result.rowCount) {
-//     throw new Error("Aucun manga correspondant");
-//   }
-//   return result.rows[0];
-// }
-
-// // Ajoute des méthodes spécifiques de mise à jour
-// [
-//   "title",
-//   "volume_number",
-//   "year_of_publication",
-//   "author",
-//   "description",
-//   "cover_url",
-//   "category"
-// ].forEach(field => {
-//   mangaDataMapper[
-//     `updateOneManga${field.charAt(0).toUpperCase() + field.slice(1)}ById`
-//   ] = async (code_isbn, newValue) => {
-//     return mangaDataMapper.updateOneMangaFieldById(code_isbn, field, newValue);
-//   };
-// });
-
-// module.exports = mangaDataMapper;

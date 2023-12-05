@@ -29,5 +29,7 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`🌍 Le serveur tourne à : http://localhost:${PORT}`);
 });
-
-connectToDatabase();
+//
+// à mettre en off en phase développement
+//
+// connectToDatabase(); 

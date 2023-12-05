@@ -1,0 +1,46 @@
+
+// Récuéprer tous les mangas .getAllMangas
+GET  http://localhost:3000/manga HTTP/1.1
+
+###
+// Ajouter un manga .createOneManga
+POST  http://localhost:3000/manga HTTP/1.1
+Content-Type: application/json
+
+{
+  "code_isbn": 293820283020,
+  "title": "Les aventures de Tintin au Congo",
+  "volume": 1303923,
+  "year_publication": 2002,
+  "author": "Masashi Kishimoto",
+  "description": "Naruto est un garçon un peu spécial. Il est toujours tout seul et son caractère fougueux ne l'aide pas vraiment à se faire apprécier dans son village. Malgré cela, il garde au fond de lui une ambition : celle de devenir un maître Hokage, la plus haute distinction dans l'ordre des ninjas, et ainsi obtenir la reconnaissance de ses pairs.",
+  "cover_url": "/home/amine/Code/Apo/Back/projet-4-manga-sama-back/public/images/9782871294146.jpg",
+  "category_id": 1
+}
+###
+// Obtenir les informations d'un manga .getOneMangaById
+GET http://localhost:3000/manga/9782871294146 HTTP/1.1
+
+###
+// Route d'API d'insertion d'un nouveau manga en base de données .getMangaInfos
+POST http://localhost:3000/manga/9782871294146 HTTP/1.1
+
+###
+// Modifier un manga .modifyOneMangaById
+PUT  http://localhost:3000/manga/9782871294146 HTTP/1.1
+Content-Type: application/json
+
+{
+  "code_isbn": 9782871294146,
+  "title": "Naruto Tome 1",
+  "volume": 1,
+  "year_publication": 2002,
+  "author": "Amine Semetunemine",
+  "description": "Naruto est un garçon un peu spécial. Il est toujours tout seul et son caractère fougueux ne l'aide pas vraiment à se faire apprécier dans son village. Malgré cela, il garde au fond de lui une ambition : celle de devenir un maître Hokage, la plus haute distinction dans l'ordre des ninjas, et ainsi obtenir la reconnaissance de ses pairs.",
+  "cover_url": "/home/amine/Code/Apo/Back/projet-4-manga-sama-back/public/images/9782871294146.jpg",
+  "category_id": 1
+}
+
+###
+// Supprimer un manga .removeOneMangaById
+DELETE  http://localhost:3000/manga/293820283020 HTTP/1.1

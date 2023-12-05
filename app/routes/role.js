@@ -3,12 +3,12 @@
 // const router = express.Router();
 
 // Routes correspondant aux rôles utilisateur
-// router.route('/role')
+// router.route('/')
 //   .get(roleController.getAll)
 //   .post(roleController.create)
 
 // Routes correspondant à un role spécifique
-// router.route('/role/:id')
+// router.route('/:id')
 //   .get(roleController.getOneRoleById)
 //   .patch(roleController.updateOneRoleById)
 //   .delete(roleController.deleteOneRoleById)

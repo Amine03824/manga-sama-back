@@ -3,12 +3,12 @@
 // const router = express.Router();
 
 // Routes correspondant aux catégories
-// router.route('/category')
+// router.route('/')
 //   .get(categoryController.getAll)
 //   .post(categoryController.create)
 
 // Routes correspondant à une catégorie spécifique
-// router.route('/category/:id')
+// router.route('/:id')
 //   .get(categoryController.getOneCategoryById)
 //   .patch(categoryController.updateOneCategoryById)
 //   .delete(categoryController.deleteOneCategoryById)

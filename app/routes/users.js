@@ -1,18 +1,23 @@
 // Import d'express et du router
-// const express = require("express");
-// const router = express.Router();
+const express = require("express");
+const router = express.Router();
+
+// Import du controleur
+const userController = require('../controllers/userController');
 
 // Route correspondant aux utilisateurs
-// router.route('/user')
-//  .get(userController.getAll)
-//  .post(userController.create)
+router.route('/')
+  .get(userController.getAllUsers)
+  .post(userController.createOneUser);
 
 // Route correspondant à un utilisateur spécifique
-// router.route('/user/:id')
-//  .get(userController.getOneUserById)
-//  .path(userController.updateOneUserById)
-//  .delete(userController.deleteOneUserById)
+router.route('/:id')
+  .get(userController.getOneUserById)
+  .put(userController.modifyOneUserById)
+  .delete(userController.removeOneUserById);
 
-
+router.route('/admin/:id')
+  .put(userController.adminModifyOneUserById);
+  
 // Export
-// module.exports = router;
+module.exports = router;

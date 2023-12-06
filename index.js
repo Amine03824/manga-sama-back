@@ -4,6 +4,8 @@ require("dotenv").config();
 const express = require('express');
 const router = require('./app/routes');
 const cors = require('cors');
+// Import de la base de données pour se connecter automatiquement
+const { connectToDatabase } = require('./app/config/database');
 
 const app = express();
 
@@ -25,5 +27,9 @@ app.use(router);
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log(`🛰 Le serveur tourne du feu de dieu à l'adresse http://localhost:${PORT}`);
+  console.log(`🌍 Le serveur tourne à : http://localhost:${PORT}`);
 });
+//
+// à mettre en off en phase développement
+//
+connectToDatabase(); 

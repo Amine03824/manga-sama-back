@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS "manga" (
   "volume" INTEGER NOT NULL,
   "year_publication" INTEGER NOT NULL ,
   "author" VARCHAR(30) NOT NULL,
-  "description" TEXT NOT NULL,
+  "description" TEXT,
   "cover_url" TEXT,
   "category_id" INTEGER NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS "manga" (
 
 -- -----------------------------------------------------
 --                  Table de catégories               --
--- ----------------------------------------------------------------------------------------------------------
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "category" (
   "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "category_name" VARCHAR(30) NOT NULL,
@@ -82,7 +82,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS "article" (
   "id" INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
   "title" VARCHAR(255) NOT NULL,
-  "description" TEXT NOT NULL,
+  "description" TEXT,
   "price" INT,
   "transaction_id" VARCHAR(36),
   "date_transaction" DATE,

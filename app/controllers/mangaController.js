@@ -27,7 +27,7 @@ const mangaController = {
     }
   },
 
-  // Crée une entrée dans la base de données à partir d'un ISBN //TODO!! route d'api
+  // 🌍 Crée une entrée dans la base de données à partir d'un ISBN 
   getMangaInfos: async (request, response) => {
     try {
       const {

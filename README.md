@@ -30,7 +30,7 @@ Si tu souhaites sauvegarder la base de données locale, utilise la commande :
 pg_dump -U <utilisateur_local> -d <nom_base_de_données_local> > backup.sql
 ```
 
-Si tu souhaites sauvegarder toutes les bases de données utilise la commande : 
+Si tu souhaites sauvegarder toutes les bases de données utilise la commande :
 
 ```bash
 pg_dumpall -U postgres -f /chemin/vers/ma_sauvegarde.sql
@@ -70,12 +70,24 @@ Si tu souhaites sauvegarder la base de données à distance, utilise la commande
 pg_dump "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" > backup.sql
 ```
 
+Si tu souhaites sauvegarder une table spécifique de la base données à distance, utilise la commande :
+
+```bash
+pg_dump "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" --table=manga --file=table_backup.sql --format=plain --no-owner --no-acl
+```
+
 ### Restauration de la base de données depuis une sauvegarde
 
 Pour restaurer la base de données à distance depuis une sauvegarde, utilisez la commande :
 
 ```bash
 psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" < backup.sql
+```
+
+Pour restaurer la sauvegarde d'une table spécifique, utilisez la commande :
+
+```bash
+psql "postgresql://Amine03824:L2uwqH1ovtpG@ep-noisy-butterfly-47808311-pooler.eu-central-1.aws.neon.tech/mangadb?sslmode=require" -f table_backup.sql
 ```
 
 ### Réinitialisation du schéma (optionnel)

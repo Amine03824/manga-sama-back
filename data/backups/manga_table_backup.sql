@@ -1,0 +1,86 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.0
+-- Dumped by pg_dump version 16.1 (Ubuntu 16.1-1.pgdg22.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: manga; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.manga (
+    code_isbn character varying(30) NOT NULL,
+    title character varying(255) NOT NULL,
+    volume integer NOT NULL,
+    year_publication integer NOT NULL,
+    author character varying(30) NOT NULL,
+    description text NOT NULL,
+    cover_url text,
+    category_id integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone
+);
+
+
+--
+-- Data for Name: manga; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.manga (code_isbn, title, volume, year_publication, author, description, cover_url, category_id, created_at, updated_at) FROM stdin;
+9782368529904	Fullmetal Alchemist Perfect Tome 1	1	2020	Hiromu Arakawa	Avec son subtil mélange d'action, d'humour, de suspense et de tragédie, Fullmetal Alchemist est le titre incontournable pour toute mangathèque ! Découvrez ou redécouvrez cette série culte dans une nouvelle édition de luxe entièrement remasterisée avec une nouvelle couverture, des pages couleurs, des croquis des personnages, une traduction mise à jour et un nouveau lettrage. Une occasion unique de partir à l'aventure aux côtés des frères Elric pour ceux qui ne connaissent pas encore ce manga de légende ! En voulant ressusciter leur mère, Edward et Alphonse Elric utilisent une technique alchimique interdite : la transmutation humaine. Seulement, l'expérience tourne mal : Edward perd un bras et une jambe et Alphonse, son corps, son esprit se retrouvant prisonnier d'une armure. Devenu un alchimiste d'Etat, Edward, surnommé le Fullmetal Alchemist, se lance, avec l'aide de son frère, à la recherche de la pierre philosophale, seule chance de retrouver leurs corps. Les deux frères commencent à enquêter sur un homme étrange, "le fondateur", qui passe pour un faiseur de miracles...	http://localhost:3000/images/9782368529904	1	2023-12-06 18:26:38.13109+00	\N
+9782871294146	Naruto Tome 1	1	2002	Masashi Kishimoto	Naruto est un garçon un peu spécial. Il est toujours tout seul et son caractère fougueux ne l'aide pas vraiment à se faire apprécier dans son village. Malgré cela, il garde au fond de lui une ambition : celle de devenir un maître Hokage, la plus haute distinction dans l'ordre des ninjas, et ainsi obtenir la reconnaissance de ses pairs.	http://localhost:3000/images/9782871294146	1	2023-12-06 18:36:26.663483+00	\N
+9782871294177	Naruto Tome 2	2	2002	Masashi Kishimoto	Sasuke, Sakura et Naruto passent un test dont le but est de s'emparer de clochettes que détient le professeur Kakashi. Il leur fait bien réaliser leur infériorité et leur manque d'expérience et finit par leur annoncer qu'ils n'ont aucune chance de devenir ninjas...	http://localhost:3000/images/9782871294177	1	2023-12-06 18:37:33.044962+00	\N
+9782871294276	Naruto Tome 3	3	2002	Masashi Kishimoto	En compagnie de Sasuke et de Sakura, Naruto, le pire garnement de l'école des ninjas du village caché de Konoha, réussit avec brio le test de survie imposé par maître Kakashi. A présent, les trois jeunes gens forment une vraie équipe, mais ils ne sont encore que des ninjas de rang inférieur.	http://localhost:3000/images/9782871294276	1	2023-12-06 18:38:09.126115+00	\N
+9782871294412	Naruto Tome 4	4	2002	Masashi Kishimoto	Sasuke s'effondre après avoir voulu protéger Naruto... !! Déclenché à la fois par la rage et la tristesse, un étrange bouleversement se produit en Naruto. Haku est alors subitement balayé par le point rageur de Naruto... ! ?	http://localhost:3000/images/9782871294412	1	2023-12-06 18:38:25.987421+00	\N
+9782871294917	Naruto Tome 5	5	2003	Masashi Kishimoto	Un groupe d'aspirants ninjas venus d'un autre village sont venus à Konoha pour passer l'examen de sélection des ninjas de "moyenne classe". Kakashi propose à ses élèves de se présenter, eux aussi, à cet examen. Et c'est partagés entre l'excitation et l'appréhension, que Naruto, Sasuke et Sakura vont déposer leur formulaire de candidature. Qui sait ce que les épreuves leur réservent... ?	http://localhost:3000/images/9782871294917	1	2023-12-06 18:38:37.555219+00	\N
+9782871292661	Hunter X Hunter Tome 1	1	2000	Yoshihiro Togashi	Dans les pas de son père, Gon quitte son village pour se présenter au difficile examen des hunters. En chemin, Gon se fera des amis. Mais survivront-ils à la première épreuve face à des participants particulièrement dangereux... ? ! Si quelques adversaires se montrent impitoyables dès le début, d'autres comme Hisoka le magicien font preuve d'un cruauté pour le moins inquiétante...	http://localhost:3000/images/9782871292661	1	2023-12-06 18:42:22.498405+00	\N
+9782871292678	Hunter X Hunter Tome 2	2	2000	Yoshihiro Togashi	Le récit s'étoffe au fur et à mesure qu'apparaissent de nouveaux personnages secondaires. On notera surtout le mystérieux Hisoka dont la puissance semble sans limites et les motivations, inattendues.	http://localhost:3000/images/9782871292678	1	2023-12-06 18:42:37.382854+00	\N
+9782871292685	Hunter X Hunter Tome 3	3	2000	Yoshihiro Togashi	Les épreuves qui, les unes après les autres, se dressent devant les candidats au titre de Hunter, nous permettent de découvrir le caractère et le passé souvent trouble de chacun. On apprend ainsi que Kirua est vraiment issu d'une famille de tueurs professionnels et qu'il peut se montrer aussi fort que cruel !	http://localhost:3000/images/9782871292685	1	2023-12-06 18:42:50.484008+00	\N
+9782871292692	Hunter X Hunter Tome 4	4	2000	Yoshihiro Togashi		http://localhost:3000/images/9782871292692	1	2023-12-06 18:43:01.120813+00	\N
+9782871292708	Hunter X Hunter Tome 5	5	2000	Yoshihiro Togashi		http://localhost:3000/images/9782871292708	1	2023-12-06 18:43:13.624908+00	\N
+9782505000327	Death Note Tome 1	1	2007	Tsugumi Ohba, Takeshi Obata	Light Yagami ramasse un étrange carnet oublié dans la cour de son lycée. Selon les instructions du carnet, la personne dont le nom est écrit dans les pages du Death Note mourra dans les 40 secondes !! Quelques jours plus tard, Light fait la connaissance de l'ancien propriétaire du carnet : Ryûk, un dieu de la mort ! Poussé par l'ennui, il a fait entrer le carnet sur terre. Ryûk découvre alors que Light a déjà commencé à remplir son carnet...	http://localhost:3000/images/9782505000327	2	2023-12-06 18:45:28.309458+00	\N
+9782915513585	Ubel Blatt Tome 0	0	2007	Etorouji Shiono	La légende raconte que pour lutter contre une terrifiante armée des ténèbres, l'empereur missionna 14 vaillants guerriers à qui il confia 14 lances sacrées. 3 d'entre eux, " les glorieux guerriers sans retour " périrent au combat. 4 autres, surnommés " les lances de la trahison ", furent exécutés par leur compagnons pour félonie. Les 7 derniers accomplirent leur mission et furent accueillis en héros à leur retour. Mais 20 ans plus tard, des rebelles baptisés eux aussi " les lances de la trahison " défient de nouveau l'autorité de l'empire... Sombre, vénéneux, épique... Découvrez Ubel Blatt, une incroyable saga de Dark Fantasy !	http://localhost:3001/images/9782915513585	2	2023-12-06 22:41:02.00121+00	\N
+9782723455862	Reborn !	1	2006	Akira Amano	Quand les bébés mafieux prennent le pouvoir ! Reborn, qui a l'apparence d'un bébé, est un tueur envoyé par le boss de la famille Vongola, une puissante organisation mafieuse, en quête de successeur. Il se rend au Japon pour devenir le tuteur de Tsunayoshi Sawada, un lycéen malchanceux, loser et minable, amoureux transi de la belle Kyoko, une camarade classe. Lorsque Tsuna découvre que Reborn a été engagé par sa mère pour le faire entrer à l'université, il est scandalisé ! Mais Reborn sort un revolver et appuie sur la gâchette ! Abattu d'une balle en plein front, Tsuna s'écroule en regrettant de ne pas s'être déclaré à Kyoko avant de mourir. C'est alors que... Série à succès du Shônen Jump, Reborn a permis à son autrice, Akira Amano, de faire partie des mangaka avec lesquels compter. Partant sur un humour délirant proche de Dragon Ball, elle s'en émancipe rapidement pour devenir un pur shônen lorsque se révèlent enfin les rivaux charismatiques.	http://localhost:3000/images/9782723455862	2	2023-12-07 00:21:01.661045+00	\N
+9782505009993	Monster Intégrale	1	2010	Naoki Urasawa	La vie quotidienne de chacun est parsemée d'embûches. Celle du prometteur docteur Tenma ne fait pas exception à la règle. Mais comment aurait-il pu imaginer qu'en remplissant sa mission de médecin, en sauvant une vie humaine plutôt que de courir après la gloire, il donnerait naissance à une telle créature ! ? Ou se situe le bien, où se situe le mal ? ! Dans une Allemagne en pleine confusion depuis la réunification, des couples d'âge moyen, sans enfant, sont tués les uns après les autres. Le tueur en série a pour nom Johann ! Mais pourquoi s'en prend-il à ces couples ? Kenzô Tenma parcourt l'Allemagne pour retrouver la soeur jumelle du jeune homme. Celle-ci pourrait bien détenir des informations afin de percer le secret du " Monstre ".	http://localhost:3000/images/9782505009993	2	2023-12-07 00:27:38.38979+00	\N
+9782811679811	L'attaque des titans	1	2023	Hajime Isayama	Le monde appartient désormais aux Titans, des êtres gigantesques qui ont presque décimé l'Humanité... Un tome anniversaire avec des pages couleur et l'épisode 0, le one-shot inédit à l'origine de la série !	http://localhost:3000/images/9782811679811	2	2023-12-07 00:28:52.227401+00	\N
+9782344020685	Berserk	1	2017	Kentaro Miura	"Vous qui entrez ici, abandonnez toute espérance. " Guts est un guerrier solitaire à l'épée démesurée. Marqué par un terrible passé, il parcourt le monde en semant la mort sur son passage. Un jour, il vient en aide à Puck, un elfe facétieux et volubile qui décide de l'accompagner dans son voyage. Traqué par des forces obscures, Guts tente de devenir maître de son destin pour regagner sa liberté et accomplir sa vengeance... Berserk, rare manga de dark fantasy, marque avant tout par son univers graphique travaillé et apocalyptique, mais aussi par sa violence et la gravité de ses thématiques. Une oeuvre qui n'a rien à envier à des sagas emblématiques telles que Game of Thrones, Conan le Cimmérien ou encore Le Cycle d'Elric.	http://localhost:3000/images/9782344020685	2	2023-12-07 00:29:36.565223+00	\N
+9782380710243	Spy X Family	1	2020	Tatsuya Endo	Twilight, le plus grand espion du monde, doit pour sa nouvelle mission créer une famille de toutes pièces afin de pouvoir s'introduire dans la plus prestigieuse école de l'aristocratie. Totalement dépourvu d'expérience familiale, il va adopter une petite fille en ignorant qu'elle est télépathe, et s'associer à une jeune femme timide, sans se douter qu'elle est une redoutable tueuse à gages. Ce trio atypique va devoir composer pour passer inaperçu, tout en découvrant les vraies valeurs d'une famille unie et aimante.	http://localhost:3000/images/9782380710243	1	2023-12-07 00:31:54.126432+00	\N
+\.
+
+
+--
+-- Name: manga manga_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manga
+    ADD CONSTRAINT manga_pkey PRIMARY KEY (code_isbn);
+
+
+--
+-- Name: manga manga_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manga
+    ADD CONSTRAINT manga_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

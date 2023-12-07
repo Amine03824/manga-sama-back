@@ -26,7 +26,7 @@ const articleController = {
     }
   },
 
-  // Crée un nouveau article dans la base de données
+  // Crée un nouvel article dans la base de données
   createOneArticle: async (request, response) => {
     try {
       const {

@@ -22,8 +22,8 @@ Content-Type: application/json
 GET http://localhost:3000/manga/9782368529904 HTTP/1.1
 
 ###
-// Route d'API d'insertion d'un nouveau manga en base de données .getMangaInfos
-GET http://localhost:3000/manga/API/9782505000327  HTTP/1.1
+// 🌍 Route d'API d'insertion d'un nouveau manga en base de données .getMangaInfos
+GET http://localhost:3000/manga/API/9782380710243  HTTP/1.1
 
 
 ###

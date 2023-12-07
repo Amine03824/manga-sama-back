@@ -41,7 +41,8 @@ async function mangaAPI(isbn) {
     const $ = cheerio.load(html);
 
     // Récupérer le titre du livre en excluant le contenu de la balise <span class="format">
-    const title = $(".fp-top--main-info .product-title")
+    const titleElement = $(".fp-top--main-info .product-title");
+    const title = titleElement
       .contents()
       .filter(function() {
         return this.nodeType === 3; // Filtrer les nœuds de texte
@@ -49,12 +50,17 @@ async function mangaAPI(isbn) {
       .text()
       .trim();
 
-    // Fonction pour extraire le numéro de tome
+    // Fonction pour extraire le numéro de tome ou de volume (insensible à la casse)
     function extractVolumeNumber(title) {
-      const match = title.match(/Tome (\d+)/);
-      return match ? parseInt(match[1], 10) : null;
+      // Extraire le numéro de tome ou de volume (insensible à la casse)
+      const match = title.match(/(tome|volume) (\d+)/i);
+      return match ? parseInt(match[2], 10) : null;
     }
-    // Appeler la fonction pour extraire le numéro de tome
+
+    // Retirer le texte "Tome xx" ou "Volume xx" du titre (insensible à la casse)
+    const titleWithoutVolume = title.replace(/(tome|volume) \d+/i, "").trim();
+
+    // Appeler la fonction pour extraire le numéro de tome ou de volume
     const volumeNumber = extractVolumeNumber(title);
 
     // Fonction pour extraire les noms des auteurs
@@ -176,7 +182,7 @@ async function mangaAPI(isbn) {
     // Retourner un objet contenant toutes les informations du livre
     return {
       code_isbn: parseInt(isbn),
-      title,
+      title : titleWithoutVolume ,
       volume: parseInt(volumeNumber),
       year_publication: parseInt(year),
       author: mainAuthor,

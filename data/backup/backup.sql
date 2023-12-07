@@ -276,6 +276,24 @@ ALTER TABLE public."user" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 --
 
 COPY public.article (id, title, description, price, transaction_id, date_transaction, state_completion, image_url, condition_id, created_at, updated_at) FROM stdin;
+1	Fullmetal Alchemist Perfect Tome 1	Avec son subtil mélange d'action, d'humour, de suspense et de tragédie...	10	\N	\N	\N	http://localhost:3000/images/9782368529904	2	2023-12-07 05:49:40.602575+00	\N
+2	Naruto Tome 1	Naruto est un garçon un peu spécial. Il est toujours tout seul et son caractère fougueux ne l'aide pas vraiment...	15	\N	\N	\N	http://localhost:3000/images/9782871294146	1	2023-12-07 05:49:40.602575+00	\N
+3	Naruto Tome 2	Sasuke, Sakura et Naruto passent un test dont le but est de s'emparer de clochettes que détient le professeur Kakashi...	12	\N	\N	\N	http://localhost:3000/images/9782871294177	3	2023-12-07 05:49:40.602575+00	\N
+4	Naruto Tome 3	En compagnie de Sasuke et de Sakura, Naruto, le pire garnement de l'école des ninjas du village caché de Konoha, réussit avec brio le test de survie imposé par maître Kakashi...	18	\N	\N	\N	http://localhost:3000/images/9782871294276	1	2023-12-07 05:49:40.602575+00	\N
+5	Naruto Tome 4	Sasuke s'effondre après avoir voulu protéger Naruto... !! Déclenché à la fois par la rage et la tristesse, un étrange bouleversement se produit en Naruto...	20	\N	\N	\N	http://localhost:3000/images/9782871294412	2	2023-12-07 05:49:40.602575+00	\N
+6	Naruto Tome 5	Un groupe d'aspirants ninjas venus d'un autre village sont venus à Konoha pour passer l'examen de sélection des ninjas de "moyenne classe"...	15	\N	\N	\N	http://localhost:3000/images/9782871294917	3	2023-12-07 05:49:40.602575+00	\N
+7	Hunter X Hunter Tome 1	Dans les pas de son père, Gon quitte son village pour se présenter au difficile examen des hunters...	10	\N	\N	\N	http://localhost:3000/images/9782871292661	2	2023-12-07 05:49:40.602575+00	\N
+8	Hunter X Hunter Tome 2	Le récit s'étoffe au fur et à mesure qu'apparaissent de nouveaux personnages secondaires. On notera surtout le mystérieux Hisoka dont la puissance semble sans limites et les motivations, inattendues...	15	\N	\N	\N	http://localhost:3000/images/9782871292678	1	2023-12-07 05:49:40.602575+00	\N
+9	Hunter X Hunter Tome 3	Les épreuves qui, les unes après les autres, se dressent devant les candidats au titre de Hunter, nous permettent de découvrir le caractère et le passé souvent trouble de chacun...	12	\N	\N	\N	http://localhost:3000/images/9782871292685	3	2023-12-07 05:49:40.602575+00	\N
+10	Hunter X Hunter Tome 4		14	\N	\N	\N	http://localhost:3000/images/9782871292692	1	2023-12-07 05:49:40.602575+00	\N
+11	Hunter X Hunter Tome 5		16	\N	\N	\N	http://localhost:3000/images/9782871292708	2	2023-12-07 05:49:40.602575+00	\N
+12	Death Note Tome 1	Light Yagami ramasse un étrange carnet oublié dans la cour de son lycée. Selon les instructions du carnet, la personne dont le nom est écrit dans les pages du Death Note mourra dans les 40 secondes !! Quelques jours plus tard, Light fait la connaissance de l'ancien propriétaire du carnet : Ryûk, un dieu de la mort ! Poussé par l'ennui, il a fait entrer le carnet sur terre. Ryûk découvre alors que Light a déjà commencé à remplir son carnet...	18	\N	\N	\N	http://localhost:3000/images/9782505000327	3	2023-12-07 05:49:40.602575+00	\N
+13	Ubel Blatt Tome 0	La légende raconte que pour lutter contre une terrifiante armée des ténèbres, l'empereur missionna 14 vaillants guerriers à qui il confia 14 lances sacrées...	10	\N	\N	\N	http://localhost:3001/images/9782915513585	2	2023-12-07 05:49:40.602575+00	\N
+14	Reborn !	Quand les bébés mafieux prennent le pouvoir ! Reborn, qui a l'apparence d'un bébé, est un tueur envoyé par le boss de la famille Vongola, une puissante organisation mafieuse, en quête de successeur...	15	\N	\N	\N	http://localhost:3000/images/9782723455862	1	2023-12-07 05:49:40.602575+00	\N
+15	Monster Intégrale	La vie quotidienne de chacun est parsemée d'embûches. Celle du prometteur docteur Tenma ne fait pas exception à la règle. Mais comment aurait-il pu imaginer qu'en remplissant sa mission de médecin, en sauvant une vie humaine plutôt que de courir après la gloire, il donnerait naissance à une telle créature ! ? Ou se situe le bien, où se situe le mal ? ! Dans une Allemagne en pleine confusion depuis la réunification, des couples d'âge moyen, sans enfant, sont tués les uns après les autres. Le tueur en série a pour nom Johann ! Mais pourquoi s'en prend-il à ces couples ? Kenzô Tenma parcourt l'Allemagne pour retrouver la soeur jumelle du jeune homme. Celle-ci pourrait bien détenir des informations afin de percer le secret du " Monstre "...	20	\N	\N	\N	http://localhost:3000/images/9782505009993	2	2023-12-07 05:49:40.602575+00	\N
+16	L'attaque des titans	Le monde appartient désormais aux Titans, des êtres gigantesques qui ont presque décimé l'Humanité... Un tome anniversaire avec des pages couleur et l'épisode 0, le one-shot inédit à l'origine de la série !	15	\N	\N	\N	http://localhost:3000/images/9782811679811	3	2023-12-07 05:49:40.602575+00	\N
+17	Berserk	"Vous qui entrez ici, abandonnez toute espérance. " Guts est un guerrier solitaire à l'épée démesurée. Marqué par un terrible passé, il parcourt le monde en semant la mort sur son passage. Un jour, il vient en aide à Puck, un elfe facétieux et volubile qui décide de l'accompagner dans son voyage. Traqué par des forces obscures, Guts tente de devenir maître de son destin pour regagner sa liberté et accomplir sa vengeance...	18	\N	\N	\N	http://localhost:3000/images/9782344020685	1	2023-12-07 05:49:40.602575+00	\N
+18	Spy X Family	Twilight, le plus grand espion du monde, doit pour sa nouvelle mission créer une famille de toutes pièces afin de pouvoir s'introduire dans la plus prestigieuse école de l'aristocratie. Totalement dépourvu d'expérience familiale, il va adopter une petite fille en ignorant qu'elle est télépathe, et s'associer à une jeune femme timide, sans se douter qu'elle est une redoutable tueuse à gages. Ce trio atypique va devoir composer pour passer inaperçu, tout en découvrant les vraies valeurs d'une famille unie et aimante.	16	\N	\N	\N	http://localhost:3000/images/9782380710243	2	2023-12-07 05:49:40.602575+00	\N
 \.
 
 
@@ -284,12 +302,12 @@ COPY public.article (id, title, description, price, transaction_id, date_transac
 --
 
 COPY public.category (id, category_name, created_at, updated_at) FROM stdin;
-1	Shōnen	2023-12-06 16:43:25.175453+00	\N
-2	Seinen	2023-12-06 16:43:25.175453+00	\N
-3	Shōjo	2023-12-06 16:43:25.175453+00	\N
-4	Josei	2023-12-06 16:43:25.175453+00	\N
-5	Kodomo	2023-12-06 16:43:25.175453+00	\N
-6	Seijin	2023-12-06 16:43:25.175453+00	\N
+1	Shōnen	2023-12-07 05:49:16.689163+00	\N
+2	Seinen	2023-12-07 05:49:16.689163+00	\N
+3	Shōjo	2023-12-07 05:49:16.689163+00	\N
+4	Josei	2023-12-07 05:49:16.689163+00	\N
+5	Kodomo	2023-12-07 05:49:16.689163+00	\N
+6	Seijin	2023-12-07 05:49:16.689163+00	\N
 \.
 
 
@@ -298,9 +316,9 @@ COPY public.category (id, category_name, created_at, updated_at) FROM stdin;
 --
 
 COPY public.condition (id, condition_name, created_at, updated_at) FROM stdin;
-1	Acceptable	2023-12-06 16:43:25.175453+00	\N
-2	Bon	2023-12-06 16:43:25.175453+00	\N
-3	Parfait	2023-12-06 16:43:25.175453+00	\N
+1	Acceptable	2023-12-07 05:49:02.395059+00	\N
+2	Bon	2023-12-07 05:49:02.395059+00	\N
+3	Parfait	2023-12-07 05:49:02.395059+00	\N
 \.
 
 
@@ -321,7 +339,7 @@ COPY public.manga (code_isbn, title, volume, year_publication, author, descripti
 9782871292692	Hunter X Hunter Tome 4	4	2000	Yoshihiro Togashi		http://localhost:3000/images/9782871292692	1	2023-12-06 18:43:01.120813+00	\N
 9782871292708	Hunter X Hunter Tome 5	5	2000	Yoshihiro Togashi		http://localhost:3000/images/9782871292708	1	2023-12-06 18:43:13.624908+00	\N
 9782505000327	Death Note Tome 1	1	2007	Tsugumi Ohba, Takeshi Obata	Light Yagami ramasse un étrange carnet oublié dans la cour de son lycée. Selon les instructions du carnet, la personne dont le nom est écrit dans les pages du Death Note mourra dans les 40 secondes !! Quelques jours plus tard, Light fait la connaissance de l'ancien propriétaire du carnet : Ryûk, un dieu de la mort ! Poussé par l'ennui, il a fait entrer le carnet sur terre. Ryûk découvre alors que Light a déjà commencé à remplir son carnet...	http://localhost:3000/images/9782505000327	2	2023-12-06 18:45:28.309458+00	\N
-9782915513585	Ubel Blatt Tome 0	0	2007	Etorouji Shiono	La légende raconte que pour lutter contre une terrifiante armée des ténèbres, l'empereur missionna 14 vaillants guerriers à qui il confia 14 lances sacrées. 3 d'entre eux, " les glorieux guerriers sans retour " périrent au combat. 4 autres, surnommés " les lances de la trahison ", furent exécutés par leur compagnons pour félonie. Les 7 derniers accomplirent leur mission et furent accueillis en héros à leur retour. Mais 20 ans plus tard, des rebelles baptisés eux aussi " les lances de la trahison " défient de nouveau l'autorité de l'empire... Sombre, vénéneux, épique... Découvrez Ubel Blatt, une incroyable saga de Dark Fantasy !	http://localhost:3001/images/9782915513585	2	2023-12-06 22:41:02.00121+00	\N
+9782915513585	Ubel Blatt Tome 0	0	2007	Etorouji Shiono	La légende raconte que pour lutter contre une terrifiante armée des ténèbres, l'empereur missionna 14 vaillants guerriers à qui il confia 14 lances sacrées. 3 d'entre eux, " les glorieux guerriers sans retour " périrent au combat. 4 autres, surnommés " les lances de la trahison ", furent exécutés par leur compagnons pour félonie. Les 7 derniers accomplirent leur mission et furent accueillis en héros à leur retour. Mais 20 ans plus tard, des rebelles baptisés eux aussi " les lances de la trahison " défient de nouveau l'autorité de l'empire... Sombre, vénéneux, épique... Découvrez Ubel Blatt, une incroyable saga de Dark Fantasy !	http://localhost:3000/images/9782915513585	2	2023-12-06 22:41:02.00121+00	\N
 9782723455862	Reborn !	1	2006	Akira Amano	Quand les bébés mafieux prennent le pouvoir ! Reborn, qui a l'apparence d'un bébé, est un tueur envoyé par le boss de la famille Vongola, une puissante organisation mafieuse, en quête de successeur. Il se rend au Japon pour devenir le tuteur de Tsunayoshi Sawada, un lycéen malchanceux, loser et minable, amoureux transi de la belle Kyoko, une camarade classe. Lorsque Tsuna découvre que Reborn a été engagé par sa mère pour le faire entrer à l'université, il est scandalisé ! Mais Reborn sort un revolver et appuie sur la gâchette ! Abattu d'une balle en plein front, Tsuna s'écroule en regrettant de ne pas s'être déclaré à Kyoko avant de mourir. C'est alors que... Série à succès du Shônen Jump, Reborn a permis à son autrice, Akira Amano, de faire partie des mangaka avec lesquels compter. Partant sur un humour délirant proche de Dragon Ball, elle s'en émancipe rapidement pour devenir un pur shônen lorsque se révèlent enfin les rivaux charismatiques.	http://localhost:3000/images/9782723455862	2	2023-12-07 00:21:01.661045+00	\N
 9782505009993	Monster Intégrale	1	2010	Naoki Urasawa	La vie quotidienne de chacun est parsemée d'embûches. Celle du prometteur docteur Tenma ne fait pas exception à la règle. Mais comment aurait-il pu imaginer qu'en remplissant sa mission de médecin, en sauvant une vie humaine plutôt que de courir après la gloire, il donnerait naissance à une telle créature ! ? Ou se situe le bien, où se situe le mal ? ! Dans une Allemagne en pleine confusion depuis la réunification, des couples d'âge moyen, sans enfant, sont tués les uns après les autres. Le tueur en série a pour nom Johann ! Mais pourquoi s'en prend-il à ces couples ? Kenzô Tenma parcourt l'Allemagne pour retrouver la soeur jumelle du jeune homme. Celle-ci pourrait bien détenir des informations afin de percer le secret du " Monstre ".	http://localhost:3000/images/9782505009993	2	2023-12-07 00:27:38.38979+00	\N
 9782811679811	L'attaque des titans	1	2023	Hajime Isayama	Le monde appartient désormais aux Titans, des êtres gigantesques qui ont presque décimé l'Humanité... Un tome anniversaire avec des pages couleur et l'épisode 0, le one-shot inédit à l'origine de la série !	http://localhost:3000/images/9782811679811	2	2023-12-07 00:28:52.227401+00	\N
@@ -335,21 +353,24 @@ COPY public.manga (code_isbn, title, volume, year_publication, author, descripti
 --
 
 COPY public.manga_has_article (manga_code_isbn, article_id) FROM stdin;
-2222333344445	4
-5555666677778	5
-8888999900001	6
-1234123412345	7
-1234567890123	1
-9876543210987	2
-1111222233334	3
-1111111111111	1
-2222222222222	2
-3333333333333	3
-4444444444444	4
-5555555555555	5
-6666666666666	6
-7777777777777	7
-8888888888888	8
+9782368529904	1
+9782871294146	2
+9782871294177	3
+9782871294276	4
+9782871294412	5
+9782871294917	6
+9782871292661	7
+9782871292678	8
+9782871292685	9
+9782871292692	10
+9782871292708	11
+9782505000327	12
+9782915513585	13
+9782723455862	14
+9782505009993	15
+9782811679811	16
+9782344020685	17
+9782380710243	18
 \.
 
 
@@ -358,8 +379,8 @@ COPY public.manga_has_article (manga_code_isbn, article_id) FROM stdin;
 --
 
 COPY public.role (id, role_name, created_at, updated_at) FROM stdin;
-1	Admin	2023-12-06 16:43:25.175453+00	\N
-2	User	2023-12-06 16:43:25.175453+00	\N
+1	Admin	2023-12-07 05:49:09.310704+00	\N
+2	User	2023-12-07 05:49:09.310704+00	\N
 \.
 
 
@@ -373,6 +394,9 @@ COPY public."user" (id, lastname, firstname, pseudo, birthdate, address, zip_cod
 3	Naruto	Uzumaki	naruto	1997-10-10	3 Rue des Hokages	93370	Montfermeil	777888999	naruto@email.com	hashed_password	2	2023-12-06 16:43:25.328904+00	\N
 4	Sasuke	Uchiha	sasuke	1994-07-23	9 Rue des Vengeurs	93370	Montfermeil	666555444	sasuke@email.com	hashed_password	2	2023-12-06 16:43:25.328904+00	\N
 9	\N	\N	YsT	\N	\N	\N	\N	\N	tanguy.huart@oclock.school	coucou	1	2023-12-06 22:43:29.061945+00	\N
+10	Anthony	Trujillo	anthony_theversus	1901-05-10			dunkerque		qsdqsdqsd@ilqdqsdfa.com	jmEsLint<3	1	2023-12-07 02:04:25.910611+00	\N
+13	Olivier	Séné	Olivier_Fan2Rock	1941-05-10			London		qsdqsqsdqsdfsdqsd@ilqdqsdfa.com	TelegraphRoad	1	2023-12-07 02:06:30.491988+00	\N
+11	Houd	Alami	HoudChef2projet	2001-05-10			Konoha		qsdqsqsdqsdqsd@ilqdqsdfa.com	Liveshare	1	2023-12-07 02:05:33.483537+00	\N
 \.
 
 
@@ -381,13 +405,6 @@ COPY public."user" (id, lastname, firstname, pseudo, birthdate, address, zip_cod
 --
 
 COPY public.user_has_article (user_id, article_id) FROM stdin;
-2	4
-3	5
-4	6
-1	7
-1	1
-3	2
-4	3
 \.
 
 
@@ -395,7 +412,7 @@ COPY public.user_has_article (user_id, article_id) FROM stdin;
 -- Name: article_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Amine03824
 --
 
-SELECT pg_catalog.setval('public.article_id_seq', 8, true);
+SELECT pg_catalog.setval('public.article_id_seq', 18, true);
 
 
 --
@@ -423,7 +440,7 @@ SELECT pg_catalog.setval('public.role_id_seq', 2, true);
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Amine03824
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 9, true);
+SELECT pg_catalog.setval('public.user_id_seq', 1, false);
 
 
 --
@@ -520,6 +537,38 @@ ALTER TABLE ONLY public.article
 
 ALTER TABLE ONLY public.manga
     ADD CONSTRAINT manga_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE CASCADE;
+
+
+--
+-- Name: manga_has_article manga_has_article_article_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Amine03824
+--
+
+ALTER TABLE ONLY public.manga_has_article
+    ADD CONSTRAINT manga_has_article_article_id_fkey FOREIGN KEY (article_id) REFERENCES public.article(id) ON DELETE CASCADE;
+
+
+--
+-- Name: manga_has_article manga_has_article_manga_code_isbn_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Amine03824
+--
+
+ALTER TABLE ONLY public.manga_has_article
+    ADD CONSTRAINT manga_has_article_manga_code_isbn_fkey FOREIGN KEY (manga_code_isbn) REFERENCES public.manga(code_isbn) ON DELETE CASCADE;
+
+
+--
+-- Name: user_has_article user_has_article_article_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Amine03824
+--
+
+ALTER TABLE ONLY public.user_has_article
+    ADD CONSTRAINT user_has_article_article_id_fkey FOREIGN KEY (article_id) REFERENCES public.article(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_has_article user_has_article_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Amine03824
+--
+
+ALTER TABLE ONLY public.user_has_article
+    ADD CONSTRAINT user_has_article_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE CASCADE;
 
 
 --

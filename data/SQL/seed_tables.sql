@@ -16,7 +16,7 @@ INSERT INTO "category" ("category_name") VALUES
 ('Shōnen'), 
 ('Seinen'), 
 ('Shōjo'), 
-('Josei'), 
+('Josei'), 9791032713792
 ('Kodomo'), 
 ('Seijin');
 

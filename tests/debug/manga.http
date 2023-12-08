@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 ###
 // Obtenir les informations d'un manga .getOneMangaById
-GET http://localhost:3000/manga/9782368529904 HTTP/1.1
+GET http://localhost:3000/manga/ HTTP/1.1
 
 ###
 // 🌍 Route d'API d'insertion d'un nouveau manga en base de données .getMangaInfos

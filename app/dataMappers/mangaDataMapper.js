@@ -97,9 +97,10 @@ const mangaDataMapper = {
       values: [code_isbn]
     };
     const result = await pool.query(sql);
-    if (!result.rowCount) {
-      throw new Error("Aucun manga correspondant dans la base de données");
-    }
+  
+    // if (!result.rowCount) {
+    //   // throw new Error("Aucun manga correspondant dans la base de données");
+    // }
     return result.rows[0];
   },
 

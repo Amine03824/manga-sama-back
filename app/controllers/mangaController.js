@@ -42,6 +42,7 @@ const mangaController = {
       }
 
       try {
+        console.log(isbn);
         // Récupère les informations du manga
         const mangaInfo = await mangaService.mangaAPI(isbn);
         console.log(`༼ つ ◕_◕ ༽つ l'API a marché on a chopé le manga`);
@@ -171,28 +172,20 @@ const mangaController = {
   },
 
   // Récupère un manga par son code isbn
-  getOneMangaById: async (request, response) => {
+  getOneMangaById: async ( request, response) => {
     try {
       const {
         isbn
       } = request.params;
-      const code_isbn = isbn;
-      const manga = await mangaDataMapper.findOneMangaById(code_isbn);
-      // Si Aucun manga trouvé on essaye avec l'API
+      const manga = await mangaDataMapper.findOneMangaById(isbn);
+      // Si Aucun manga trouvé on essaye avec l'API    
       if (!manga){
-        const fetchedManga = await mangaDataMapper.getMangaInfos(code_isbn);
-        if (!fetchedManga) {
-          // Aucun manga retourné, l'API a peut être échoué
-          return response.status(404).json({error: {
-            message: "Aucun manga retourné, l'api a peut-être échoué"}});
-        } else {
-          // On retourne le manga nouvellement inséré dans la base de données
-          return response.status(200).json(fetchedManga);
-        }
+        return response.redirect(`/manga/API/${isbn}`);
       }
       // Le manga existe et il a été trouvé dans le base de données il est retourné
       return response.status(200).json(manga);
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
       return response.json({
         status: 500,
@@ -230,7 +223,7 @@ const mangaController = {
 
       if (volume && typeof volume !== "number") {
         return response.json({
-          "error": "Type invalide : le tome doit être un nombre"
+          "error": "Type invaliconst code_isbn = toString(isbn);de : le tome doit être un nombre"
         });
       }
 

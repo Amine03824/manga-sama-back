@@ -10,6 +10,11 @@ router.route('/')
   .get(articleController.getAllArticles)
   .post(articleController.createOneArticle);
 
+router.route('/user/:userId')
+  .get(articleController.getArticlesByUser);
+
+  
+
 // Routes correspondant à une annonce spécifique
 router.route('/:id')
   .get(articleController.getOneArticleById)

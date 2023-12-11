@@ -10,7 +10,7 @@ const mangasRouter = require('./mangas');
 const conditionsRouter = require('./conditions');
 const rolesRouter = require('./roles');
 const imagesRouter = require('./images'); 
-
+const authenticationRouter = require('./authentication.js');
 // Import du routeur des associations
 const associationsRouter = require('./associations');
 
@@ -39,6 +39,8 @@ router.use('/role', rolesRouter);
 // Routes correspondant aux des couvertures de mangas
 router.use('/images', imagesRouter);
 
+// Routes correspondnant à la gestion de l'authentification et de la déconnexion
+router.use('auth', authenticationRouter);
 
 // Routes correspondant aux associations
 router.use('/associate', associationsRouter);

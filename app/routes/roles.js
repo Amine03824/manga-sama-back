@@ -3,19 +3,26 @@ const express = require("express");
 const router = express.Router();
 
 // Import du controlleur
-const roleController = require('../controllers/roleController');
+const roleController = require("../controllers/roleController");
+
+// Import du middleware d'authentification
+const authenticationMiddleware = require("../middlewares/authenticationMiddleware");
+
+// Ajout du Middleware d'authentification sécurisée
+router.use(authenticationMiddleware);
 
 // Routes correspondant aux rôles utilisateur
-router.route('/')
+router
+  .route("/")
   .get(roleController.getAllRoles)
   .post(roleController.createOneRole);
 
 // Routes correspondant à un role spécifique
-router.route('/:id')
+router
+  .route("/:id")
   .get(roleController.getOneRoleById)
   .patch(roleController.modifyOneRoleById)
   .delete(roleController.removeOneRoleById);
-
 
 // Export
 module.exports = router;

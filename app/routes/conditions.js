@@ -3,19 +3,23 @@ const express = require("express");
 const router = express.Router();
 
 // Import du controlleur
-const conditionController = require('../controllers/conditionController');
+const conditionController = require("../controllers/conditionController");
 
+// Import du middleware d'authentification
+const authenticationMiddleware = require("../middlewares/authenticationMiddleware");
 
 // Routes correspondant à l'état des mangas
-router.route('/')
+router
+  .route("/")
   .get(conditionController.getAllConditions)
-  .post(conditionController.createOneCondition);
+  .post(authenticationMiddleware, conditionController.createOneCondition);
 
 // Routes correspondant à un état spécifique
-router.route('/:id')
-  .get(conditionController.getOneConditionById)
-  .patch(conditionController.modifyOneConditionById)
-  .delete(conditionController.removeOneConditionById);
+router
+  .route("/:id")
+  .get(authenticationMiddleware, conditionController.getOneConditionById)
+  .patch(authenticationMiddleware, conditionController.modifyOneConditionById)
+  .delete(authenticationMiddleware, conditionController.removeOneConditionById);
 
 // Export
 module.exports = router;

@@ -5,20 +5,23 @@ const router = express.Router();
 // Import du controleur
 const userController = require("../controllers/userController");
 
+// Import du middleware d'authentification
+const authenticationMiddleware = require("../middlewares/authenticationMiddleware");
+
 // Route correspondant aux utilisateurs
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(userController.createOneUser);
+  .post(authenticationMiddleware, userController.createOneUser);
 
 // Route correspondant à un utilisateur spécifique
 router
   .route("/:id")
-  .get(userController.getOneUserById)
-  .put(userController.modifyOneUserById)
-  .patch(userController.modifyOneUserEmailById)
+  .get(authenticationMiddleware, userController.getOneUserById)
+  .put(authenticationMiddleware, userController.modifyOneUserById)
+  .patch(authenticationMiddleware, userController.modifyOneUserEmailById)
   // .patch(userController.modifyOneUserPasswordById) Route de moficiation de mot de passe
-  .delete(userController.removeOneUserById);
+  .delete(authenticationMiddleware, userController.removeOneUserById);
 
 // Export
 module.exports = router;

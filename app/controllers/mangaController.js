@@ -56,7 +56,7 @@ const mangaController = {
             year_publication: mangaInfo.year_publication,
             author: mangaInfo.author,
             description: mangaInfo.description,
-            cover_url: `http://amine03824-server.eddi.cloud:${process.env.PORT}/images/${isbn}`,
+            cover_url: `http://localhost:${process.env.PORT}/images/${isbn}`,
             category_id: mangaInfo.category_id
           });
 

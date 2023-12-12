@@ -3,49 +3,48 @@ const express = require("express");
 const router = express.Router();
 
 // Import des sous routeurs
-const articlesRouter = require('./articles'); 
-const categoriesRouter = require('./categories');
-const usersRouter = require('./users');
-const mangasRouter = require('./mangas');
-const conditionsRouter = require('./conditions');
-const rolesRouter = require('./roles');
-const imagesRouter = require('./images'); 
-
+const articlesRouter = require("./articles");
+const categoriesRouter = require("./categories");
+const usersRouter = require("./users");
+const mangasRouter = require("./mangas");
+const conditionsRouter = require("./conditions");
+const rolesRouter = require("./roles");
+const imagesRouter = require("./images");
+const authenticationRouter = require("./authentication.js");
 // Import du routeur des associations
-const associationsRouter = require('./associations');
+const associationsRouter = require("./associations");
 
 // Import du routeur d'administration
-const adminRouter = require('./admin');
-
+const adminRouter = require("./admin");
 
 // Routes correspondant aux annonces
-router.use('/article', articlesRouter);
+router.use("/article", articlesRouter);
 
 // Routes correspondant aux catégories
-router.use('/category', categoriesRouter);
+router.use("/category", categoriesRouter);
 
 // Routes correspondant aux utilisateurs
-router.use('/user', usersRouter);
+router.use("/user", usersRouter);
 
 //  Routes correspondant aux mangas dans la base de données
-router.use('/manga', mangasRouter);
+router.use("/manga", mangasRouter);
 
 // Routes correspondant à l'état des mangas
-router.use('/condition', conditionsRouter);
+router.use("/condition", conditionsRouter);
 
 // Routes correspondant aux rôles utilisateur
-router.use('/role', rolesRouter);
+router.use("/role", rolesRouter);
 
 // Routes correspondant aux des couvertures de mangas
-router.use('/images', imagesRouter);
+router.use("/images", imagesRouter);
 
+// Routes correspondnant à la gestion de l'authentification et de la déconnexion
+router.use("/auth", authenticationRouter);
 
 // Routes correspondant aux associations
-router.use('/associate', associationsRouter);
+router.use("/associate", associationsRouter);
 
 // Routes d'administration
-router.use('/admin', adminRouter);
-
+router.use("/admin", adminRouter);
 
 module.exports = router;
-

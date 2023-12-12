@@ -6,7 +6,7 @@ const pool = new Pool({
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
   ssl: {
-    rejectUnauthorized: true,
+    rejectUnauthorized: true
   }
 });
 
@@ -20,3 +20,4 @@ async function connectToDatabase() {
 }
 
 module.exports = { pool, connectToDatabase };
+

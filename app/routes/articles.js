@@ -3,12 +3,18 @@ const express = require("express");
 const router = express.Router();
 
 // Import du controleur
-const articleController = require('../controllers/articleController');
+const articleController = require("../controllers/articleController");
+
+// Import du middleware d'authentification
+const {
+  authenticateMiddleware
+} = require("../middlewares/authenticationMiddleware");
 
 // Routes correspondant aux annonces
-router.route('/')
+router
+  .route("/")
   .get(articleController.getAllArticles)
-  .post(articleController.createOneArticle);
+  .post(authenticateMiddleware, articleController.createOneArticle);
 
 router.route('/user/:userId')
   .get(articleController.getArticlesByUser);
@@ -16,10 +22,11 @@ router.route('/user/:userId')
   
 
 // Routes correspondant à une annonce spécifique
-router.route('/:id')
+router
+  .route("/:id")
   .get(articleController.getOneArticleById)
-  .put(articleController.modifyOneArticleById)
-  .delete(articleController.removeOneArticleById);
- 
+  .put(authenticateMiddleware, articleController.modifyOneArticleById)
+  .delete(authenticateMiddleware, articleController.removeOneArticleById);
+
 // Export
 module.exports = router;

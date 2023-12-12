@@ -3,22 +3,28 @@ const express = require("express");
 const router = express.Router();
 
 // Import du controleur
-const mangaController = require('../controllers/mangaController');
+const mangaController = require("../controllers/mangaController");
+
+// Import du middleware d'authentification
+const {
+  authenticateMiddleware
+} = require("../middlewares/authenticationMiddleware");
 
 // Routes correspondant aux mangas
-router.route('/')
+router
+  .route("/")
   .get(mangaController.getAllMangas)
-  .post(mangaController.createOneManga);
+  .post(authenticateMiddleware, mangaController.createOneManga);
 
 // Routes correspondant à un manga spécifique
-router.route('/:isbn')
-  .get(mangaController.getOneMangaById)
-  .put(mangaController.modifyOneMangaById)
-  .delete(mangaController.removeOneMangaById);   
+router
+  .route("/:isbn")
+  .get(authenticateMiddleware, mangaController.getOneMangaById)
+  .put(authenticateMiddleware, mangaController.modifyOneMangaById)
+  .delete(authenticateMiddleware, mangaController.removeOneMangaById);
 
 // Route d'API d'insertion d'un nouveau manga en base de données
-router.route('/API/:isbn')
-  .get(mangaController.getMangaInfos); 
+router.route("/API/:isbn").get(mangaController.getMangaInfos);
 
 // Export
 module.exports = router;

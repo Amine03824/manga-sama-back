@@ -1,7 +1,9 @@
 const validator = require("email-validator");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
-
+const emailService = require("../services/mail/emailService.js");
+const jwt = require("jsonwebtoken");
+const jwtConfig = require("../config/jwt");
 const userDataMapper = require("../dataMappers/userDataMapper");
 
 const userController = {
@@ -132,6 +134,26 @@ const userController = {
       if (newUser) {
         // Si la création de l'utilisateur s'est bien déroulée
         console.log("L'utilisateur a été créé avec succès");
+        try {
+          // Génère un token JWT en utilisant la clé secrète et spécifiant une expiration d'une heure
+          const token = jwt.sign(
+            { userId: newUser.id, role: newUser.role },
+            jwtConfig.jwtSecretKey,
+            { expiresIn: "1h" }
+          );
+          // Envoi d'un e-mail de confirmation ✉
+          await emailService.sendConfirmationEmail(email);
+          // Retourne une réponse avec le statut 200 et les données de l'utilisateur ainsi que le token
+          return response.status(201).json({
+            success: true,
+            message: 'Inscription réussie. Email de confirmation envoyé.',
+            user: newUser,
+            token: token
+          });
+        } catch (error) {
+          console.error(error);
+          response.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail de confirmation.' });
+        }
         return response.json({
           status: 201,
           success: true,

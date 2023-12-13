@@ -41,6 +41,9 @@ dependencies:
   nodejs:
     specifier: ^0.0.0
     version: 0.0.0
+  nodemailer:
+    specifier: ^6.9.7
+    version: 6.9.7
   pg:
     specifier: ^8.11.3
     version: 8.11.3
@@ -1325,6 +1328,11 @@ packages:
 
   /nodejs@0.0.0:
     resolution: {integrity: sha512-1V+0HwaB/dhxzidEFc4uJ3k52gLI4B6YBZgJIofjwYCSAkD6CI0me6TDBT2QM2nbGWNxCHcq9/wVynzQYZOhUg==}
+    dev: false
+
+  /nodemailer@6.9.7:
+    resolution: {integrity: sha512-rUtR77ksqex/eZRLmQ21LKVH5nAAsVicAtAYudK7JgwenEDZ0UIQ1adUGqErz7sMkWYxWTTU1aeP2Jga6WQyJw==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nopt@5.0.0:

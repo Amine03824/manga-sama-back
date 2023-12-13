@@ -37,6 +37,7 @@ const authenticateMiddleware = (request, response, next) => {
     // Appeler next() pour passer au middleware suivant ou à la route protégée
     next();
   } catch (error) {
+    console.log(error);
     // En cas d'erreur de vérification du token, ajouter le token à la liste noire
     tokensBlacklist.push(token);
     return response

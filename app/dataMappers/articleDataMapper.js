@@ -9,6 +9,8 @@ const articleDataMapper = {
     article.id AS a_id,
     article.title AS a_title,
     article.description AS a_description,
+    article.created_at AS a_created_at,
+    article.updated_at AS a_updated_at,
     article.*,
     "user".id AS u_id,
     "user".*,
@@ -23,7 +25,7 @@ const articleDataMapper = {
     INNER JOIN manga ON manga_has_article.manga_code_isbn = manga.code_isbn
     INNER JOIN user_has_article ON article.id = user_has_article.article_id
     INNER JOIN "user" ON user_has_article.user_id = "user".id
-    ORDER BY article.created_at ASC
+    ORDER BY a_created_at DESC;
     ;`;
 
     // console.log("SQL Query:", sql); // On peut console.log le sql!
@@ -32,6 +34,8 @@ const articleDataMapper = {
     if (!result.rowCount) {
       throw new Error("Aucune Annonces trouvées dans la base de données");
     }
+
+
     // Organise les résultats
     const formattedArticles = result.rows.map((article) => {
       return {
@@ -43,8 +47,8 @@ const articleDataMapper = {
           transaction_id: article.transaction_id,
           date_transaction: article.date_transaction,
           state_completion: article.state_completion,
-          created_at: article.created_at,
-          updated_at: article.updated_at,
+          created_at: article.a_created_at,
+          updated_at: article.a_updated_at,
         },
 
         manga: {
@@ -64,7 +68,7 @@ const articleDataMapper = {
           pseudo: article.pseudo,
           city: article.city,
           created_at : article.u_created_at,
-          updated_at : article.u_updated_at
+          updated_at : article.u_updated_at,
         },
       };
     });
@@ -260,6 +264,7 @@ const articleDataMapper = {
 
     // Transformez l'objet en tableau d'articles regroupés
     const articlesRegroupesArray = Object.values(articlesRegroupes);
+    
 
     return articlesRegroupesArray;
   }

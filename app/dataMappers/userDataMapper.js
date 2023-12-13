@@ -133,16 +133,31 @@ const userDataMapper = {
       text: "SELECT * FROM public.user WHERE email = $1;",
       values: [email],
     };
-  
+    
     const result = await pool.query(sql);
-  
     if (!result.rowCount) {
-      return null; // Aucun utilisateur trouvé
+      throw new Error(
+        "Aucun Utilisateur correspondant dans la base de données"
+      );
     }
-  
     return result.rows[0];
   },
   
+  // Trouve l'email d'un utilisateur par son ID
+  findOneUserEmailById: async (id) => {
+    const sql = {
+      text: "SELECT email FROM public.user WHERE id = $1;",
+      values: [id],
+    };
+
+    const result = await pool.query(sql);
+
+    if (!result.rowCount) {
+      return null; // Aucun utilisateur trouvé
+    }
+
+    return result.rows[0].email;
+  },
 
   // Supprime une Utilisateur par son id
   deleteOneUserById: async (id) => {

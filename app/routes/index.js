@@ -17,6 +17,9 @@ const associationsRouter = require("./associations");
 // Import du routeur d'administration
 const adminRouter = require("./admin");
 
+// Import du routeur des transactions
+const transctionRouter = require("./transactions");
+
 // Routes correspondant aux annonces
 router.use("/article", articlesRouter);
 
@@ -46,5 +49,8 @@ router.use("/associate", associationsRouter);
 
 // Routes d'administration
 router.use("/admin", adminRouter);
+
+// Routes correspondant aux transactions
+router.use("/transaction", transctionRouter);
 
 module.exports = router;

@@ -22,7 +22,7 @@ const articleController = {
   },
 
   // Crée un nouvel article dans la base de données
-  createOneArticle: async (request, response, next) => {
+  createOneArticle: async (request, response) => {
     try {
       const { title, description, price, image_url, condition_id } =
         request.body;

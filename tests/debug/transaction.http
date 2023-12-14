@@ -6,5 +6,5 @@ Content-Type: application/json
 {
   "buyerID": "1",
   "sellerID": "2",
-  "articleID": "19"
+  "articleID": "8"
 }

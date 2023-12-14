@@ -12,7 +12,7 @@ Content-Type: application/json
   "password": "Test123!",
   "passwordConfirmation":"Test123!"
   }
-
+  
  // erreur sans les quotes alors que c'est du int
 
 ###

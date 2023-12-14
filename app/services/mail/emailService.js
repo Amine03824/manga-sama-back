@@ -1,52 +1,223 @@
 /* eslint-disable no-useless-escape */
-const transporter = require('./nodemailer');
+const transporter = require("./nodemailer");
+const fs = require("fs");
 
-const emailService = {
-  sendConfirmationEmail: async (toEmail) => {
-    const mailOptions = {
-      from: 'ruthie52@ethereal.email',
-      to: toEmail,
-      subject: '(づ｡◕‿‿◕｡)づ Confirmation d\'inscription',
-      text: 'Bienvenue sur la plateforme Manga-Sama! 🍣 Votre inscription est confirmée.',
-    };
-    return sendMailWithLogging(mailOptions, 'E-mail de confirmation envoyé avec succès.');
-  },
+// Chemin vers le fichier HTML du mail d'inscription
+const htmlRegisterFilePath = "app/services/mail/templates/register/index.html";
+const imageRegisterFolderPath = "app/services/mail/templates/register/images/";
 
-  sendTransactionBuyerConfirmationEmail: async (buyerEmail, sellerEmail, articleInfos) => {
-    const mailOptions = {
-      from: 'ruthie52@ethereal.email',
-      to: buyerEmail,
-      subject: `Le manga "${articleInfos.title}" a été réservé!📚`,
-      text: `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ La transaction est confirmée ✧･: *ヽ(◕ヮ◕ヽ)\
-      il ne te reste plus qu'a entrer en contact avec le vendeur 🎌 !\ 
-      adresse mail du vendeur : ${sellerEmail}\
-      `,
-    };
-    return sendMailWithLogging(mailOptions, 'E-mail de confirmation d\'achat envoyé avec succès.');
-  },
+// Chemin vers le fichier HTML du mail d'achat
+const htmlBuyFilePath = "app/services/mail/templates/confirmBuy/index.html";
+const imageBuyFolderPath = "app/services/mail/templates/confirmBuy/images/";
 
-  sendTransactionSellerConfirmationEmail: async (buyerEmail, sellerEmail, articleInfos) => {
-    const mailOptions = {
-      from: 'ruthie52@ethereal.email',
-      to: sellerEmail,
-      subject: `Ton manga "${articleInfos.title}" a été acheté!📚`,
-      text: `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ La transaction est confirmée ✧･: *ヽ(◕ヮ◕ヽ)\
-      il ne te reste plus qu'a entrer en contact avec l'acheteur 🎌 !\ 
-      adresse mail de l'acheteur : ${buyerEmail}\
-      `,
-    };
-    return sendMailWithLogging(mailOptions, 'E-mail de confirmation de vente envoyé avec succès.');
-  },
-};
+// Lire le contenu du fichier HTML
+const htmlRegisterContent = fs.readFileSync(htmlRegisterFilePath, "utf-8");
+let htmlBuyContent = fs.readFileSync(htmlBuyFilePath, "utf-8");
 
-// Fonction utilitaire pour l'envoi d'e-mails avec gestion des logs
-const sendMailWithLogging = async (mailOptions, successMessage) => {
+async function sendMailWithLogging(mailOptions, successMessage) {
   try {
     await transporter.sendMail(mailOptions);
     console.log(successMessage);
   } catch (error) {
     console.error(`Erreur lors de l'envoi de l'e-mail :`, error);
     throw error;
+  }
+}
+
+const emailService = {
+  sendConfirmationEmail: async (toEmail) => {
+    const mailOptions = {
+      from: "ruthie52@ethereal.email",
+      to: toEmail,
+      subject: "(づ｡◕‿‿◕｡)づ Confirmation d'inscription",
+      html: htmlRegisterContent,
+      attachments: [
+        {
+          filename: "image-12.png",
+          path: imageRegisterFolderPath + "image-12.png",
+          cid: "image-12.png"
+        },
+        {
+          filename: "image-11.jpeg",
+          path: imageRegisterFolderPath + "image-11.jpeg",
+          cid: "image-11.jpeg"
+        },
+        {
+          filename: "image-8.jpeg",
+          path: imageRegisterFolderPath + "image-8.jpeg",
+          cid: "image-8.jpeg"
+        },
+        {
+          filename: "image-7.jpeg",
+          path: imageRegisterFolderPath + "image-7.jpeg",
+          cid: "image-7.jpeg"
+        },
+        {
+          filename: "image-12.png",
+          path: imageRegisterFolderPath + "image-12.png",
+          cid: "image-12.png"
+        },
+        {
+          filename: "image-9.jpeg",
+          path: imageRegisterFolderPath + "image-9.jpeg",
+          cid: "image-9.jpeg"
+        },
+        {
+          filename: "image-10.gif",
+          path: imageRegisterFolderPath + "image-10.gif",
+          cid: "image-10.gif"
+        },
+        {
+          filename: "image-2.png",
+          path: imageRegisterFolderPath + "image-2.png",
+          cid: "image-2.png"
+        },
+        {
+          filename: "image-1.png",
+          path: imageRegisterFolderPath + "image-1.png",
+          cid: "image-1.png"
+        },
+        {
+          filename: "image-3.png",
+          path: imageRegisterFolderPath + "image-3.png",
+          cid: "image-3.png"
+        },
+        {
+          filename: "image-4.png",
+          path: imageRegisterFolderPath + "image-4.png",
+          cid: "image-4.png"
+        },
+        {
+          filename: "image-5.png",
+          path: imageRegisterFolderPath + "image-5.png",
+          cid: "image-5.png"
+        },
+        {
+          filename: "image-4.png",
+          path: imageRegisterFolderPath + "image-4.png",
+          cid: "image-4.png"
+        },
+        {
+          filename: "image-6.png",
+          path: imageRegisterFolderPath + "image-6.png",
+          cid: "image-6.png"
+        }
+      ]
+    };
+    return sendMailWithLogging(
+      mailOptions,
+      "E-mail de confirmation envoyé avec succès."
+    );
+  },
+
+  sendTransactionBuyerConfirmationEmail: async (
+    buyerEmail,
+    sellerEmail,
+    articleInfos
+  ) => {
+    // Mise à jour de la variable htmlBuyContent avec les remplacements
+    htmlBuyContent = htmlBuyContent
+      .replace("{{SELLER_EMAIL}}", sellerEmail)
+      .replace("{{MANGA_TITLE}}", articleInfos.title);
+
+    const mailOptions = {
+      from: "ruthie52@ethereal.email",
+      to: buyerEmail,
+      subject: `Le manga "${articleInfos.title}" a été réservé!📚`,
+      html: htmlBuyContent,
+      attachments: [
+        {
+          filename: "image-1.png",
+          path: imageBuyFolderPath + "image-1.png",
+          cid: "image-1.png"
+        },
+        {
+          filename: "image-2.png",
+          path: imageBuyFolderPath + "image-2.png",
+          cid: "image-2.png"
+        },
+        {
+          filename: "image-3.png",
+          path: imageBuyFolderPath + "image-3.png",
+          cid: "image-3.png"
+        },
+        {
+          filename: "image-4.png",
+          path: imageBuyFolderPath + "image-4.png",
+          cid: "image-4.png"
+        },
+        {
+          filename: "image-5.png",
+          path: imageBuyFolderPath + "image-5.png",
+          cid: "image-5.png"
+        }
+      ]
+    };
+    return sendMailWithLogging(
+      mailOptions,
+      "E-mail de confirmation d'achat envoyé avec succès."
+    );
+  },
+  sendTransactionSellerConfirmationEmail: async (
+    buyerEmail,
+    sellerEmail,
+    articleInfos
+  ) => {
+    // Chemin vers le fichier HTML du mail de confirmation pour le vendeur
+    const htmlSellerConfirmationFilePath =
+      "app/services/mail/templates/confirmSell/index.html";
+    const imageSellerConfirmationFolderPath =
+      "app/services/mail/templates/confirmSell/images/";
+    // Lire le contenu du fichier HTML pour le mail de confirmation du vendeur
+    const htmlSellerConfirmationContent = fs.readFileSync(
+      htmlSellerConfirmationFilePath,
+      "utf-8"
+    );
+
+    // Mise à jour de la variable htmlSellerConfirmationContent avec les remplacements
+    const sellerConfirmationMailContent = htmlSellerConfirmationContent
+      .replace("{{BUYER_EMAIL}}", buyerEmail)
+      .replace("{{MANGA_TITLE}}", articleInfos.title);
+
+    const mailOptions = {
+      from: "ruthie52@ethereal.email",
+      to: sellerEmail,
+      subject: `Ton manga "${articleInfos.title}" a été acheté!📚`,
+      html: sellerConfirmationMailContent,
+      attachments: [
+        {
+          filename: "image-1.png",
+          path: imageSellerConfirmationFolderPath + "image-1.png",
+          cid: "image-1.png"
+        },
+        {
+          filename: "image-2.png",
+          path: imageSellerConfirmationFolderPath + "image-2.png",
+          cid: "image-2.png"
+        },
+        {
+          filename: "image-3.png",
+          path: imageSellerConfirmationFolderPath + "image-3.png",
+          cid: "image-3.png"
+        },
+        {
+          filename: "image-4.png",
+          path: imageSellerConfirmationFolderPath + "image-4.png",
+          cid: "image-4.png"
+        },
+        {
+          filename: "image-5.png",
+          path: imageSellerConfirmationFolderPath + "image-5.png",
+          cid: "image-5.png"
+        }
+      ]
+    };
+
+    // Appel de la fonction sendMailWithLogging avec les options de courriel
+    return sendMailWithLogging(
+      mailOptions,
+      "E-mail de confirmation de vente envoyé avec succès."
+    );
   }
 };
 

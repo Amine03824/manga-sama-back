@@ -38,21 +38,22 @@ const mangaController = {
       }
 
       try {
-        console.log(isbn);
+        const unformattedIsbn = isbn;
+        console.log(unformattedIsbn);
         // Récupère les informations du manga
-        const mangaInfo = await mangaService.mangaAPI(isbn);
+        const mangaInfo = await mangaService.mangaAPI(unformattedIsbn);
         console.log(`༼ つ ◕_◕ ༽つ l'API a marché on a chopé le manga`);
-
+        console.log(mangaInfo);
         if (mangaInfo) {
           // Insère les informations du manga en base de données
           const insertedManga = await mangaDataMapper.insertOneManga({
-            code_isbn: isbn,
+            code_isbn : mangaInfo.code_isbn,
             title: mangaInfo.title,
             volume: mangaInfo.volume,
             year_publication: mangaInfo.year_publication,
             author: mangaInfo.author,
             description: mangaInfo.description,
-            cover_url: `http://localhost:${process.env.PORT}/images/${isbn}`,
+            cover_url: `http://localhost:${process.env.PORT}/images/${mangaInfo.code_isbn}`,
             category_id: mangaInfo.category_id
           });
 
@@ -176,7 +177,8 @@ const mangaController = {
       const manga = await mangaDataMapper.findOneMangaById(isbn);
       // Si Aucun manga trouvé on essaye avec l'API
       if (!manga) {
-        return response.redirect(`/manga/API/${isbn}`);
+        const unformattedIsbn = isbn;
+        return response.redirect(`/manga/API/${unformattedIsbn}`);
       }
       // Le manga existe et il a été trouvé dans le base de données il est retourné
       return response.status(200).json(manga);

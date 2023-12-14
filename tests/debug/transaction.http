@@ -5,6 +5,8 @@ Content-Type: application/json
 
 {
   "buyerID": "1",
-  "sellerID": "2",
-  "articleID": "8"
+  "sellerID": "9",
+  "articleID": "8",
 }
+
+// TODO! : prendre en charge le cas de vente d'une personne qui possède pas l'articl

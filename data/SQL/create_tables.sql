@@ -53,12 +53,12 @@ CREATE TABLE IF NOT EXISTS "role" (
 CREATE TABLE IF NOT EXISTS "manga" (
   "code_isbn" VARCHAR(30) NOT NULL PRIMARY KEY,
   "title" VARCHAR(255) NOT NULL,
-  "volume" INTEGER NOT NULL,
+  "volume" INTEGER NULL,
   "year_publication" INTEGER NOT NULL ,
-  "author" VARCHAR(30) NOT NULL,
+  "author" VARCHAR(60) NOT NULL,
   "description" TEXT,
   "cover_url" TEXT,
-  "category_id" INTEGER NOT NULL,
+  "category_id" INTEGER NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );

@@ -4,15 +4,17 @@ const cheerio = require("cheerio");
 const path = require("path");
 
 // Fonction principale asynchrone
-async function mangaAPI(isbn) {
+async function mangaAPI(unformattedIsbn) {
   // Vérifier si l'isbn est fourni
-  if (!isbn) {
+  if (!unformattedIsbn) {
     console.error("Veuillez fournir un isbn en tant qu'argument.");
   }
-
+  console.log("isbn non formaté :" +unformattedIsbn);
   // Construire l'URL en utilisant l'isbn
+  // Retirer les tirets de l'ISBN
+  const isbn = parseInt(unformattedIsbn.replace(/-/g, ''));
   const url = `https://www.decitre.fr/livres/${isbn}.html`;
-
+  console.log("isbn formaté :" +isbn);
   // Fonction pour télécharger la page HTML de manière asynchrone
   async function downloadHTML() {
     try {
@@ -64,14 +66,13 @@ async function mangaAPI(isbn) {
         return parseInt(match[2], 10) || NaN;
       }
 
-      return NaN; // Utiliser NaN si le numéro n'est pas trouvé
+      return null; // Utiliser null si le numéro n'est pas trouvé
     }
     // Retirer le texte "Tome xx" ou "Volume xx" du titre (insensible à la casse)
     const titleWithoutVolume = title.replace(/(tome|volume) \d+/i, "").trim();
 
     // Appeler la fonction pour extraire le numéro de tome ou de volume
-    const volumeNumber = extractVolumeNumber(title);
-
+    let volumeNumber = extractVolumeNumber(title);
     // Fonction pour extraire les noms des auteurs
     function extractAuthors() {
       const authorElements = $(".authors.authors--main h2 a");
@@ -88,6 +89,7 @@ async function mangaAPI(isbn) {
 
     // Fonction pour télécharger l'image de couverture de la meilleure résolution possible
     async function downloadCoverImage(isbn, model) {
+      console.log("cherche l'image!");
       const imageUrl = `https://products-images.di-static.com/image/cover/${isbn}-475x500-${model}.jpg`;
 
       try {
@@ -176,7 +178,8 @@ async function mangaAPI(isbn) {
       Kodomo: 5,
       "Kodomo (enfants)": 5,
       Hentai: 6,
-      Ecchi: 7
+      Ecchi: 7,
+      "Ecchi (érotique)": 7
     };
 
     // Obtenir le genre formaté
@@ -186,9 +189,11 @@ async function mangaAPI(isbn) {
     // Obtenir la catégorie à partir du mapping
     const category_id = genreToCategoryMapping[formattedGenre];
     console.log("catégorie de manga :" + category_id);
-    if (category_id === undefined) {
-      throw new Error("Genre non pris en charge");
-    }
+    
+    // On va finalement autoriser le cas ou il n'y a pas de catégorie
+    // if (category_id === undefined) {           
+    //   throw new Error("Genre non pris en charge");
+    // }
 
     // Vérifier si la catégorie est autorisée
     if (category_id === 6 || category_id === 7) {
@@ -201,7 +206,7 @@ async function mangaAPI(isbn) {
     return {
       code_isbn: parseInt(isbn),
       title: titleWithoutVolume,
-      volume: parseInt(volumeNumber),
+      volume: volumeNumber,
       year_publication: parseInt(year),
       author: mainAuthor,
       description,

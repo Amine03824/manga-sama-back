@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS "article" (
   "price" INT,
   "transaction_id" VARCHAR(36),
   "date_transaction" DATE,
-  "state_completion" INTEGER DEFAULT 0,
+  "state_completion" VARCHAR(20) DEFAULT 'En ligne',
   "photo_url" TEXT,
   "image_url" TEXT,
   "condition_id" INTEGER NOT NULL,

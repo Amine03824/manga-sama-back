@@ -1,7 +1,29 @@
 const articleDataMapper = require("../dataMappers/articleDataMapper");
+const tokensBlacklist = require("../middlewares/authenticationMiddleware");
 
+/**
+ * Controller pour gérer les requêtes liées aux articles.
+ * @module articleController
+ */
 const articleController = {
-  // Récupère tous les articles de la base de données
+  /**
+   * Récupère tous les articles de la base de données. Envoie une réponse HTTP avec
+   * la liste des articles en format JSON. Si aucun article n'est trouvé, passe
+   * au middleware suivant. Gère également les erreurs en cas de problèmes lors de
+   * la récupération des articles.
+   *
+   * @async
+   * @function getAllArticles
+   * @param {Object} request - L'objet de requête HTTP.
+   * @param {Object} response - L'objet de réponse HTTP.
+   * @param {Function} next - La fonction de rappel next pour le middleware. Utilisée pour passer au middleware suivant si aucun article n'est trouvé.
+   * @returns {Promise<void>} Ne retourne pas de valeur. Les réponses sont envoyées directement via l'objet `response`.
+   * @description
+   * - Tente de récupérer tous les articles en utilisant `articleDataMapper.findAllArticles`.
+   * - Si aucun article n'est trouvé, appelle `next()` pour passer au middleware suivant dans la chaîne.
+   * - Si des articles sont trouvés, envoie une réponse avec le statut 200 et les données des articles en format JSON.
+   * - En cas d'erreur lors de la récupération des articles, enregistre l'erreur dans la console et envoie une réponse avec le statut 500 et les détails de l'erreur.
+   */
   getAllArticles: async (request, response, next) => {
     try {
       const articles = await articleDataMapper.findAllArticles();
@@ -103,10 +125,9 @@ const articleController = {
   modifyOneArticleById: async (request, response) => {
     try {
       const { id } = request.params;
-
+      const { userID } = request.user.userId;
       const { title, description, price, image_url, condition_id } =
         request.body;
-
       if (
         !id ||
         !title ||
@@ -121,12 +142,16 @@ const articleController = {
         });
       }
 
-      // if (price && typeof price !== "number") {
-      //   return response.json({
-      //     error: "Type invalide : le prix doit être un nombre"
-      //   });
-      // }
-      // TODO! : réparer ce check ne passe pas
+      const articleOwner = await articleDataMapper.findArticleOwnerByArticleId(
+        id
+      );
+
+      if (userID !== articleOwner) {
+        return response.status(403).json({
+          message: "tu fais des trucs bizarres toi non?"
+        });
+      }
+
       const modifiedArticle = await articleDataMapper.updateOneArticle({
         id,
         title,
@@ -163,7 +188,16 @@ const articleController = {
   removeOneArticleById: async (request, response) => {
     try {
       const { id } = request.params;
+      const { userID } = request.user.userId;
+      const articleOwner = await articleDataMapper.findArticleOwnerByArticleId(
+        id
+      );
 
+      if (userID !== articleOwner) {
+        return response.status(403).json({
+          message: "tu fais des trucs bizarres toi non?"
+        });
+      }
       const article = await articleDataMapper.deleteOneArticleById(id);
       if (!article) {
         // Aucune annonce trouvée, renvoyer une réponse 404 Not Found
@@ -260,7 +294,7 @@ const articleController = {
   linkOneUserToOneArticle: async (request, response) => {
     try {
       const { userId, articleId } = request.params;
-
+      // TODO! : check si possible de link deux fois de suite
       if (!userId || !articleId) {
         return response.json({
           status: 400,
@@ -303,13 +337,7 @@ const articleController = {
       }
 
       const articles = await articleDataMapper.findArticlesByUser(userId);
-      // Ce cas d'usage ne devrait pas se présenter
-      // if (!articles){
-      //   return response.json({
-      //     stauts : 404,
-      //     error : "Aucun article n'est associé à l'utilisateur"
-      //   });
-      // }
+
       return response.status(200).json(articles);
     } catch (error) {
       console.log(error);

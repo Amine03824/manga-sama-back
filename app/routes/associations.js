@@ -10,7 +10,7 @@ const {
   authenticateMiddleware
 } = require("../middlewares/authenticationMiddleware");
 
-// Récupéprer toutes les annonces en lien avec un manga particulier
+// Récupère toutes les annonces en lien avec un manga particulier
 router.route("/article/manga/:isbn").get(articleController.getArticlesByManga);
 
 // Associe un manga à un article par la table de relation manga_has_article
@@ -18,7 +18,7 @@ router
   .route("/article/manga/:articleId/:isbn")
   .post(authenticateMiddleware, articleController.linkOneMangaToOneArticle);
 
-// Récupéprer toutes les annonces en lien avec un user particulier
+// Récupère toutes les annonces en lien avec un user particulier
 router.route("/user/:userId/article/").get(articleController.getArticlesByUser);
 
 // Associe un utilisateur à un article par la table de relation user_has_article

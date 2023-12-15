@@ -47,7 +47,7 @@ const mangaController = {
         if (mangaInfo) {
           // Insère les informations du manga en base de données
           const insertedManga = await mangaDataMapper.insertOneManga({
-            code_isbn : mangaInfo.code_isbn,
+            code_isbn: mangaInfo.code_isbn,
             title: mangaInfo.title,
             volume: mangaInfo.volume,
             year_publication: mangaInfo.year_publication,
@@ -216,18 +216,6 @@ const mangaController = {
         });
       }
 
-      // if (volume && typeof volume !== "number") {
-      //   return response.json({
-      //     "error": "Type invaliconst code_isbn = toString(isbn);de : le tome doit être un nombre"
-      //   });
-      // }
-
-      // if (year_publication && typeof year_publication !== "number") {
-      //   return response.json({
-      //     "error": "Type invalide : l'année de publication doit être un nombre"
-      //   });
-      // }
-      // TODO! : Checks non fonctionnel
       const modifiedManga = await mangaDataMapper.updateOneManga({
         code_isbn,
         title,

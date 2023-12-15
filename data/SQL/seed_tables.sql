@@ -30,7 +30,8 @@ VALUES
 (NULL, NULL, 'YsT', NULL, NULL, NULL, NULL, NULL, 'tanguy.huart@oclock.school', 'coucou', 1, '2023-12-06 22:43:29.061945+00', NULL),
 ('Anthony', 'Trujillo', 'anthony_theversus', '1901-05-10', NULL, NULL, 'dunkerque', NULL, 'qsdqsdqsd@ilqdqsdfa.com', 'jmEsLint<3', 1, '2023-12-07 02:04:25.910611+00', NULL),
 ('Olivier', 'Séné', 'Olivier_Fan2Rock', '1941-05-10', NULL, NULL, 'London', NULL, 'qsdqsqsdqsdfsdqsd@ilqdqsdfa.com', 'TelegraphRoad', 1, '2023-12-07 02:06:30.491988+00', NULL),
-('Houd', 'Alami', 'HoudChef2projet', '2001-05-10', NULL, NULL, 'Konoha', NULL, 'qsdqsqsdqsdqsd@ilqdqsdfa.com', 'Liveshare', 1, '2023-12-07 02:05:33.483537+00', NULL);
+('Houd', 'Alami', 'HoudChef2projet', '2001-05-10', NULL, NULL, 'Konoha', NULL, 'qsdqsqsdqsdqsd@ilqdqsdfa.com', 'Liveshare', 1, '2023-12-07 02:05:33.483537+00', NULL),
+(NULL, NULL, 'test', NULL, NULL, NULL, NULL, NULL, 'test@test.test', '$2b$10$gi8TlcIwgEwKqOFjlIu5kOX5Nnb0SfhRwzZKWesLyGqQAIO/ByNk2', 1, '2023-12-15 02:05:33.483537+00', NULL);
 
 -- Ajout des manga
 INSERT INTO "manga" ("code_isbn", "title", "volume", "year_publication", "author", "description", "cover_url", "category_id", "created_at", "updated_at")
@@ -55,26 +56,26 @@ VALUES
 (9782380710243, 'Spy X Family', 1, 2020, 'Tatsuya Endo',NULL, 'http://localhost:3000/images/9782380710243', 1, '2023-12-07 00:31:54.126432+00', NULL);
 
 -- Ajout des article
-INSERT INTO "article" ("title", "description","price","image_url","condition_id")
+INSERT INTO "article" ("title", "description","price","transaction_id","date_transaction","state_completion","image_url","condition_id")
 VALUES
-  ('Fullmetal Alchemist Perfect Tome 1',NULL, 10, 'http://localhost:3000/images/9782368529904', 2),
-  ('Naruto Tome 1',NULL, 15, 'http://localhost:3000/images/9782871294146', 1),
-  ('Naruto Tome 2', NULL, 12, 'http://localhost:3000/images/9782871294177', 3),
-  ('Naruto Tome 3',NULL, 18, 'http://localhost:3000/images/9782871294276', 1),
-  ('Naruto Tome 4',NULL, 20, 'http://localhost:3000/images/9782871294412', 2),
-  ('Naruto Tome 5',NULL, 15, 'http://localhost:3000/images/9782871294917', 3),
-  ('Hunter X Hunter Tome 1', NULL, 10, 'http://localhost:3000/images/9782871292661', 2),
-  ('Hunter X Hunter Tome 2',NULL, 15, 'http://localhost:3000/images/9782871292678', 1),
-  ('Hunter X Hunter Tome 3',NULL, 12, 'http://localhost:3000/images/9782871292685', 3),
-  ('Hunter X Hunter Tome 4',NULL, 14, 'http://localhost:3000/images/9782871292692', 1),
-  ('Hunter X Hunter Tome 5',NULL, 16, 'http://localhost:3000/images/9782871292708', 2),
-  ('Death Note Tome 1',NULL, 18, 'http://localhost:3000/images/9782505000327', 3),
-  ('Ubel Blatt Tome 0',NULL, 10, 'http://localhost:3001/images/9782915513585', 2),
-  ('Reborn !',NULL, 15, 'http://localhost:3000/images/9782723455862', 1),
-  ('Monster Intégrale',NULL, 20, 'http://localhost:3000/images/9782505009993', 2),
-  (E'L\'attaque des titans',NULL, 15, 'http://localhost:3000/images/9782811679811', 3),
-  ('Berserk',NULL, 18, 'http://localhost:3000/images/9782344020685', 1),
-  ('Spy X Family',NULL, 16, 'http://localhost:3000/images/9782380710243', 2);
+  ('Fullmetal Alchemist Perfect Tome 1', NULL, 10, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782368529904', 2),
+  ('Naruto Tome 1', NULL, 15, 6546546554, NULL,'Achat en cours', 'http://localhost:3000/images/9782871294146', 1),
+  ('Naruto Tome 2', NULL, 12, 6524654654, NULL,'Achat en cours', 'http://localhost:3000/images/9782871294177', 3),
+  ('Naruto Tome 3', NULL, 18, 6254654654, NULL,'Achat en cours', 'http://localhost:3000/images/9782871294276', 1),
+  ('Naruto Tome 4', NULL, 20, 6514654654, NULL,'Achat en cours', 'http://localhost:3000/images/9782871294412', 2),
+  ('Naruto Tome 5', NULL, 15, 6554654654, NULL,'Achat en cours', 'http://localhost:3000/images/9782871294917', 3),
+  ('Hunter X Hunter Tome 1', NULL, 10, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782871292661', 2),
+  ('Hunter X Hunter Tome 2', NULL, 15, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782871292678', 1),
+  ('Hunter X Hunter Tome 3', NULL, 12, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782871292685', 3),
+  ('Hunter X Hunter Tome 4', NULL, 14, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782871292692', 1),
+  ('Hunter X Hunter Tome 5', NULL, 16, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782871292708', 2),
+  ('Death Note Tome 1', NULL, 18, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782505000327', 3),
+  ('Ubel Blatt Tome 0', NULL, 10, NULL, NULL,'En ligne', 'http://localhost:3001/images/9782915513585', 2),
+  ('Reborn !', NULL, 15, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782723455862', 1),
+  ('Monster Intégrale', NULL, 20, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782505009993', 2),
+  (E'L\'attaque des titans',NULL, 15, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782811679811', 3),
+  ('Berserk',NULL, 18, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782344020685', 1),
+  ('Spy X Family',NULL, 16, NULL, NULL,'En ligne', 'http://localhost:3000/images/9782380710243', 2);
 
 -- Ajout de manga_has_article
 INSERT INTO "manga_has_article" ("manga_code_isbn", "article_id")
@@ -110,11 +111,11 @@ VALUES
 (4,10),
 (6,11),
 (6,16),
-(6,5),
-(6,2),
-(7,3),
-(8,4),
-(8,6),
+(9,5),
+(9,2),
+(9,3),
+(9,4),
+(9,6),
 (8,14),
 (5,18),
 (5,13),

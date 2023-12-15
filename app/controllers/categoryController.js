@@ -1,7 +1,6 @@
 const categoryDataMapper = require("../dataMappers/categoryDataMapper");
-
+const tokensBlacklist = require("../middlewares/authenticationMiddleware");
 const categoryController = {
-  
   // Récupère toutes les catégories d'un manga de la base de données
   getAllCategories: async (request, response, next) => {
     try {
@@ -9,9 +8,7 @@ const categoryController = {
       if (!categories) {
         return next();
       }
-      response.json(
-        categories
-      );
+      response.json(categories);
     } catch (error) {
       console.log(error);
       return response.json({
@@ -27,20 +24,17 @@ const categoryController = {
   // Crée une nouvelle catégorie de manga dans la base de données
   createOneCategory: async (request, response) => {
     try {
-      const {
-        category_name,
-      } = request.body;
+      const { category_name } = request.body;
 
       // Vérifie la présence de tous les paramètres nécessaires dans le corps de la requête
-      if (
-        !category_name
-      ) {
+      if (!category_name) {
         return response.json({
-          status : 400, 
-          error: "Paramètre manquant dans le corps de la requête HTTP" 
-        });      }
+          status: 400,
+          error: "Paramètre manquant dans le corps de la requête HTTP"
+        });
+      }
       const newCategory = await categoryDataMapper.insertOneCategory({
-        category_name,
+        category_name
       });
 
       if (newCategory) {
@@ -100,13 +94,21 @@ const categoryController = {
   },
 
   // Modifie une catégorie par son id
-  modifyOneCategoryById : async (request, response) => {
+  modifyOneCategoryById: async (request, response) => {
     try {
       const { id } = request.params;
-      const {
-        category_name
-      } = request.body;
+      const token = request.headers.authorization.split(" ")[1];
+      const { category_name } = request.body;
 
+      // Vérifier si l'utilisateur a le rôle d'administrateur
+      if (request.user?.role_id !== 2) {
+        tokensBlacklist.push(token);
+        // Si l'utilisateur n'est pas authentifié en tant qu'administrateur, renvoyer une réponse d'erreur
+        return response.status(403).json({
+          success: false,
+          message: "Accès interdit. Vous n'êtes pas administrateur."
+        });
+      }
       if (!category_name) {
         return response.json({
           status: 400,
@@ -119,31 +121,28 @@ const categoryController = {
       });
 
       if (modifiedCategory) {
-      // La modification s'est bien déroulée
+        // La modification s'est bien déroulée
         return response.json({
           status: 201,
           success: true,
-          message: 'La catégorie a été modifié avec succès',
-          category: modifiedCategory,
+          message: "La catégorie a été modifié avec succès",
+          category: modifiedCategory
         });
-
       } else {
         // Aucune ligne affectée, la modification n'a pas été effectuée
         return response.json({
-          status : 200,
+          status: 200,
           success: false,
-          message: "Aucune catégorie n'a été modifié",
+          message: "Aucune catégorie n'a été modifié"
         });
-
       }
-
-    }catch (error) {
+    } catch (error) {
       console.log(error);
       return response.json({
-        status : 500,
+        status: 500,
         success: false,
         error: {
-          message : error.toString()
+          message: error.toString()
         }
       });
     }
@@ -153,7 +152,18 @@ const categoryController = {
   removeOneCategoryById: async (request, response) => {
     try {
       const { id } = request.params;
+      const token = request.headers.authorization.split(" ")[1];
       const category = await categoryDataMapper.deleteOneCategoryById(id);
+
+      // Vérifier si l'utilisateur a le rôle d'administrateur
+      if (request.user?.role_id !== 2) {
+        tokensBlacklist.push(token);
+        // Si l'utilisateur n'est pas authentifié en tant qu'administrateur, renvoyer une réponse d'erreur
+        return response.status(403).json({
+          success: false,
+          message: "Accès interdit. Vous n'êtes pas administrateur."
+        });
+      }
       if (!category) {
         // Aucun catégorie trouvée, renvoyer une réponse 404 Not Found
         return response.json({

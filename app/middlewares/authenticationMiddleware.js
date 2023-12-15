@@ -49,3 +49,5 @@ const authenticateMiddleware = (request, response, next) => {
 module.exports = { authenticateMiddleware, tokensBlacklist };
 
 // TODO! : faire le cas de figure de l'administrateur qui se connecte et qui a ses autorisations spécifiques
+
+// TODO! : faire le middleware de gestion des users par le token et de leur rôle + leur blacklistage si méchants

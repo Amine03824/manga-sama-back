@@ -399,25 +399,6 @@ const userController = {
         role_id
       } = request.body;
 
-      // if (
-      //   typeof lastname !== "string" ||
-      //   typeof firstname !== "string" ||
-      //   typeof pseudo !== "string" ||
-      //   typeof birthdate !== "string" ||
-      //   typeof address !== "string" ||
-      //   typeof zip_code !== "string" ||
-      //   typeof city !== "string" ||
-      //   typeof phone_number !== "string" ||
-      //   typeof email !== "string" ||
-      //   typeof password !== "string" ||
-      //   typeof role_id !== "number"
-      // ) {
-      //   return response.json({
-      //     status: 400,
-      //     error: "Paramètre manquant dans le corps de la requête HTTP"
-      //   });
-      // }
-      //TODO! à réparer ne marche pas les checks
       const adminModifiedUser = await userDataMapper.adminUpdateOneUser({
         id,
         lastname,

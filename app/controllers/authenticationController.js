@@ -13,6 +13,7 @@ const authenticationController = {
 
       // Vérifie si l'utilisateur existe dans la base de données
       const user = await userDataMapper.findOneUserByEmail(email);
+      console.log(user);
       if (!user) {
         // Retourne une réponse d'erreur si l'utilisateur n'est pas trouvé
         return response
@@ -29,9 +30,9 @@ const authenticationController = {
           .json({ message: "Adresse e-mail ou mot de passe incorrect." });
       }
 
-      // Génère un token JWT en utilisant la clé secrète et spécifiant une expiration d'une heure
+      // Génère un token JWT avec les infos d'un user (son id et son rôle) en utilisant la clé secrète et spécifiant une expiration d'une heure
       const token = jwt.sign(
-        { userId: user.id, role: user.role },
+        { userId: user.id, role: user.role_id },
         jwtConfig.jwtSecretKey,
         { expiresIn: "1h" }
       );

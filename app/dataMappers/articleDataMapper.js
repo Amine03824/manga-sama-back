@@ -276,6 +276,19 @@ const articleDataMapper = {
       throw new Error("Aucune Annonce trouvée dans la base de données");
     }
     return result.rows[0];
+  },
+
+  findArticleOwnerByArticleId: async (article_id) => {
+    const sql = {
+      text: "SELECT user_has_article.user_id FROM user_has_article WHERE user_has_article.article_id = $1;",
+      values: [article_id]
+    };
+
+    const result = await pool.query(sql);
+    if (result.rows.length === 0) {
+      throw new Error("Aucune association trouvée dans la base de données");
+    }
+    return result.rows;
   }
 };
 

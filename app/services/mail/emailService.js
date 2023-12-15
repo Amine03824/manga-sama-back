@@ -2,18 +2,7 @@
 const transporter = require("./nodemailer");
 const fs = require("fs");
 
-// Chemin vers le fichier HTML du mail d'inscription
-const htmlRegisterFilePath = "app/services/mail/templates/register/index.html";
-const imageRegisterFolderPath = "app/services/mail/templates/register/images/";
-
-// Chemin vers le fichier HTML du mail d'achat
-const htmlBuyFilePath = "app/services/mail/templates/confirmBuy/index.html";
-const imageBuyFolderPath = "app/services/mail/templates/confirmBuy/images/";
-
-// Lire le contenu du fichier HTML
-const htmlRegisterContent = fs.readFileSync(htmlRegisterFilePath, "utf-8");
-let htmlBuyContent = fs.readFileSync(htmlBuyFilePath, "utf-8");
-
+// Fonction asynchrone pour envoyer des e-mails avec journalisation
 async function sendMailWithLogging(mailOptions, successMessage) {
   try {
     await transporter.sendMail(mailOptions);
@@ -25,12 +14,23 @@ async function sendMailWithLogging(mailOptions, successMessage) {
 }
 
 const emailService = {
+  // Envoi d'un e-mail de confirmation d'inscription
   sendConfirmationEmail: async (toEmail) => {
+    // Chemin vers le fichier HTML du mail d'inscription
+    const htmlRegisterFilePath =
+      "app/services/mail/templates/register/index.html";
+    const imageRegisterFolderPath =
+      "app/services/mail/templates/register/images/";
+
+    // Lire le contenu du fichier HTML
+    const htmlRegisterContent = fs.readFileSync(htmlRegisterFilePath, "utf-8");
+
     const mailOptions = {
       from: "contact.manga.sama@gmail.com",
       to: toEmail,
       subject: "(づ｡◕‿‿◕｡)づ Manga-Sama Confirmation d'inscription 🍣",
       html: htmlRegisterContent,
+      // Je lie en pièce jointe les images qui sont dans le code HTML
       attachments: [
         {
           filename: "image-12.png",
@@ -110,21 +110,29 @@ const emailService = {
     );
   },
 
+  // Envoi d'un e-mail de confirmation d'achat pour l'acheteur
   sendTransactionBuyerConfirmationEmail: async (
     buyerEmail,
     sellerEmail,
     articleInfos
   ) => {
+    // Chemin vers le fichier HTML du mail d'achat
+    const htmlBuyFilePath = "app/services/mail/templates/confirmBuy/index.html";
+    const imageBuyFolderPath = "app/services/mail/templates/confirmBuy/images/";
+    let htmlBuyContent = fs.readFileSync(htmlBuyFilePath, "utf-8");
+
     // Mise à jour de la variable htmlBuyContent avec les remplacements
     htmlBuyContent = htmlBuyContent
       .replace("{{SELLER_EMAIL}}", sellerEmail)
       .replace("{{MANGA_TITLE}}", articleInfos.title);
 
+    // Définition des options de l'e-mail (expéditeur, destinataire, sujet, contenu)
     const mailOptions = {
       from: "contact.manga.sama@gmail.com",
       to: buyerEmail,
       subject: `Le manga "${articleInfos.title}" a été réservé!📚`,
       html: htmlBuyContent,
+      // Je lie en pièce jointe les images qui sont dans le code HTML
       attachments: [
         {
           filename: "image-1.png",
@@ -158,6 +166,8 @@ const emailService = {
       "E-mail de confirmation d'achat envoyé avec succès."
     );
   },
+
+  // Envoi d'un e-mail de confirmation de vente pour le vendeur
   sendTransactionSellerConfirmationEmail: async (
     buyerEmail,
     sellerEmail,
@@ -184,6 +194,7 @@ const emailService = {
       to: sellerEmail,
       subject: `Ton manga "${articleInfos.title}" a été acheté!📚`,
       html: sellerConfirmationMailContent,
+      // Je lie en pièce jointe les images qui sont dans le code HTML
       attachments: [
         {
           filename: "image-1.png",

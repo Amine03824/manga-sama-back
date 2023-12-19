@@ -124,6 +124,7 @@ const userDataMapper = {
         "Aucun Utilisateur correspondant dans la base de données"
       );
     }
+    console.log(result.rows[0]);
     return result.rows[0];
   },
   

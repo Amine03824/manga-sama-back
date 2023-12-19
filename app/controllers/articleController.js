@@ -124,7 +124,7 @@ const articleController = {
   modifyOneArticleById: async (request, response) => {
     try {
       const { id } = request.params;
-      const { userId } = request.user.userId;
+      const { userId } = request.user;
       const { title, description, price, image_url, condition_id } =
         request.body;
       if (
@@ -187,12 +187,12 @@ const articleController = {
   removeOneArticleById: async (request, response) => {
     try {
       const { id } = request.params;
-      const { userId } = request.user.userId;
+      const { userId } = request.user;
       const articleOwner = await articleDataMapper.findArticleOwnerByArticleId(
         id
       );
 
-      if (userId !== articleOwner) {
+      if (userId != articleOwner.user_id) {
         return response.status(403).json({
           message: "tu fais des trucs bizarres toi non?"
         });

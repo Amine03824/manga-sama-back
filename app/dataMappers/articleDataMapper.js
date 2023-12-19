@@ -288,7 +288,8 @@ const articleDataMapper = {
     if (result.rows.length === 0) {
       throw new Error("Aucune association trouvée dans la base de données");
     }
-    return result.rows;
+    console.log(result.rows[0]);
+    return result.rows[0];
   }
 };
 

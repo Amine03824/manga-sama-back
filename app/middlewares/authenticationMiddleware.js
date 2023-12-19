@@ -71,7 +71,7 @@ const articleOwnerMiddleware = async (request, response, next) => {
       return response.status(404).json({ message: "Article introuvable." });
     }
 
-    if (request.user.userId !== articleOwner.userId) {
+    if (request.user.userId !== articleOwner.user_id) {
       tokensBlacklist.push(token);
       return response.status(403).json({ message: "Accès refusé. Vous n'êtes pas le propriétaire de cet article." });
     }
@@ -96,13 +96,13 @@ const userOwnerMiddleware = async (request, response, next) => {
       return response.status(404).json({ message: "Utilisateur introuvable." });
     }
     console.log("request.user.userId : "+request.user.userId);
-    console.log("roleOwner.userId : "+roleOwner.userId);
+    console.log("roleOwner.id : "+roleOwner.id);
 
-    if (request.user.userId !== roleOwner.userId) {
+    if (request.user.userId !== roleOwner.id) {
       tokensBlacklist.push(token);
       return response.status(403).json({ message: "Accès refusé. Vous n'êtes pas le propriétaire de ce compte." });
     }
-    console.log("Vérification terminée, je passe à l'étpae suivante");
+    console.log("Vérification terminée, je passe à l'étape suivante");
     next();
   } catch (error) {
     response.status(500).json({ message: "Erreur serveur." });

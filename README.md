@@ -1,6 +1,6 @@
 # Bienvenue sur le Repo Back du projet Manga-Sama 🍣  
 
-## 🌿 Last branch standing : feat/userUpload 📤
+## ~~🌿 Last branch standing : feat/userUpload 📤~~
 
 ## ~~🌿 Last branch standing : feat/TRANSACTION+STRIPE 💳~~
 
@@ -19,6 +19,6 @@
 ## ~~🌿 Last branch standing : Feat/architecture 🏰~~
 
 
-![ESint](https://s6.gifyu.com/images/S8wD4.gif)
+![ESint](./public/S8wD4.gif)
 
 ![tonio sur son ordi](https://media.tenor.com/o5ewu4vTJ58AAAAd/old-man-computer.gif)

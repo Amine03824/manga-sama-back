@@ -39,6 +39,6 @@ app.listen(PORT, () => {
   console.log(`🌍 Le serveur tourne à : http://localhost:${PORT}`);
 });
 
-gitCommand();
+
 
 connectToDatabase();

@@ -35,19 +35,21 @@ return next();
 }
 
 const gitCommand = () => {
-  console.log('coucou');
+ setTimeout(() => {
   return new Promise((resolve , reject) => {
-   const gitAdd = spawn('git', ['add', '.'])
-   gitAdd.on('close', () => {
-    const gitCommit = spawn('git', ['commit', '-m', 'Mise a jour de main'])
-    gitCommit.on('close', () => {
-      const gitPush = spawn('git', ['push'])
-      gitPush.on('close', () => {
-      resolve()
-      })
+    const gitAdd = spawn('git', ['add', '.'])
+    gitAdd.on('close', () => {
+     const gitCommit = spawn('git', ['commit', '-m', 'Mise a jour de main'])
+     gitCommit.on('close', () => {
+       const gitPush = spawn('git', ['push'])
+       gitPush.on('close', () => {
+       resolve()
+       })
+     })
     })
    })
-  })
+ }, )
+ 
 
   
   

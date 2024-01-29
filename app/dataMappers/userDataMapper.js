@@ -1,31 +1,22 @@
 const { pool } = require("../config/database");
 
 const userDataMapper = {
-
   // Récupère toutes les Utilisateurs de la base de données
-  // Il faut bien préciser qu'on souhaite accéder à la table "user" et non à l'utilisateur de postgres, dans ce cas il faut mettre des quotes mais pour une requête préparée ça n'a pas l'air possible nous avons donc été chercher la table user dans le schéma 'public' avec public.user 
+  // Il faut bien préciser qu'on souhaite accéder à la table "user" et non à l'utilisateur de postgres, dans ce cas il faut mettre des quotes mais pour une requête préparée ça n'a pas l'air possible nous avons donc été chercher la table user dans le schéma 'public' avec public.user
   findAllusers: async () => {
-    const sql = "SELECT * FROM public.user ORDER BY id ASC;";
+    const sql = "SELECT pseudo FROM public.user ORDER BY id ASC;";
     const result = await pool.query(sql);
     if (!result.rowCount) {
       throw new Error("Aucun Utilisateur trouvé dans la base de données");
     }
     return result.rows;
   },
-  
+
   // Insère un nouvel Utilisateur dans la base de données
-  insertOneUser: async ({
-    pseudo,
-    email,
-    password,
-  }) => {
+  insertOneUser: async ({ pseudo, email, password }) => {
     const sql = {
       text: "INSERT INTO public.user (pseudo, email, password) VALUES ($1, $2, $3) RETURNING *;",
-      values: [
-        pseudo,
-        email,
-        password,
-      ],
+      values: [pseudo, email, password],
     };
     const result = await pool.query(sql);
     if (!result.rowCount) {
@@ -44,7 +35,7 @@ const userDataMapper = {
     address,
     zip_code,
     city,
-    phone_number
+    phone_number,
   }) => {
     const sql = {
       text: `
@@ -69,7 +60,7 @@ const userDataMapper = {
         address,
         zip_code,
         city,
-        phone_number
+        phone_number,
       ],
     };
 
@@ -84,10 +75,7 @@ const userDataMapper = {
     return result.rows[0];
   },
   // Met à jour les informations d'un Utilisateur dans la base de données
-  updateOneUserEmail: async ({
-    id,
-    email
-  }) => {
+  updateOneUserEmail: async ({ id, email }) => {
     const sql = {
       text: `
     UPDATE 
@@ -95,10 +83,7 @@ const userDataMapper = {
     email = $2
     WHERE id = $1
     RETURNING *;`,
-      values: [
-        id,
-        email
-      ],
+      values: [id, email],
     };
 
     const result = await pool.query(sql);
@@ -127,25 +112,23 @@ const userDataMapper = {
     console.log(result.rows[0]);
     return result.rows[0];
   },
-  
+
   // Récupère un Utilisateur par son email
   findOneUserByEmail: async (email) => {
     const sql = {
       text: "SELECT * FROM public.user WHERE email = $1;",
       values: [email],
     };
-  
+
     const result = await pool.query(sql);
-  
+
     if (!result.rowCount) {
       return null; // Aucun utilisateur trouvé
     }
-  
+
     return result.rows[0];
   },
 
-
-  
   // Trouve l'email d'un utilisateur par son ID
   findOneUserEmailById: async (id) => {
     const sql = {
@@ -180,7 +163,7 @@ const userDataMapper = {
   },
 
   // Permet d'éditer toutes les infos d'un utilisateur par un Administrateur (donc le rôle en plus)
-  adminUpdateOneUser : async ({
+  adminUpdateOneUser: async ({
     id,
     lastname,
     firstname,
@@ -192,7 +175,7 @@ const userDataMapper = {
     phone_number,
     email,
     password,
-    role_id
+    role_id,
   }) => {
     const sql = {
       text: `
@@ -223,20 +206,20 @@ const userDataMapper = {
         phone_number,
         email,
         password,
-        role_id
+        role_id,
       ],
     };
-  
+
     const result = await pool.query(sql);
-  
+
     if (!result.rowCount) {
       throw new Error(
         "Aucun Utilisateur trouvé pour la mise à jour dans la base de données"
       );
     }
-  
+
     return result.rows[0];
-  }, 
+  },
 
   // Associe un utilisateur à une annonce
   associateOneUserWithOneArticle: async (user_id, article_id) => {
@@ -269,23 +252,23 @@ const userDataMapper = {
   },
 
   insertImageProfileByUserId: async (id, image_profile_url) => {
-    try {  
+    try {
       const sql = {
         text: "UPDATE public.user SET image_profile_url = $2 WHERE id = $1 RETURNING *;",
         values: [id, image_profile_url],
       };
-  
+
       const result = await pool.query(sql);
-  
+
       if (!result.rowCount) {
         throw new Error("Aucun utilisateur trouvé dans la base de données");
       }
-  
+
       return result.rows[0];
     } catch (error) {
       console.error(error);
       throw error; // rethrow the error to handle it in the calling function
     }
-  }
+  },
 };
 module.exports = userDataMapper;

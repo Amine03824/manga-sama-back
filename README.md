@@ -1,5 +1,18 @@
 # Bienvenue sur le Repo Back du projet Manga-Sama 🍣  
 
+![Schema](./public/schema-backend.png)
+
+C'est l'API et le cœur backend de notre plateforme dédiée à l'univers du manga, la logique métier, l'architecture BDD, l'authentification, et la beta du système de transaction.
+👇 **POUR ALLER PLUS LOIN :** 👇
+
+> ### 📖 Liens Importants
+> 
+> 📁 [**ACCÉDER AU DOSSIER COMPLET DU PROJET**](https://amine.works/download-dossier)
+> 
+> 📊 [**LA PRÉSENTATION POWERPOINT**](https://amine.works/download-presentation)
+
+---
+
 ## ~~🌿 Last branch standing : feat/userUpload 📤~~
 
 ## ~~🌿 Last branch standing : feat/TRANSACTION+STRIPE 💳~~
@@ -17,7 +30,6 @@
 ## ~~🌿 Last branch standing : Feat/SERVER-SETUP 🛠️ + 🚀~~
 
 ## ~~🌿 Last branch standing : Feat/architecture 🏰~~
-
 
 ![ESint](./public/S8wD4.gif)
 

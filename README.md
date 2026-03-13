@@ -1,39 +1,30 @@
-# Bienvenue sur le Repo Back du projet Manga-Sama 🍣  
+# 🌦️ Application Météo - Réseau de Transports Français
+🌐 [**VOIR LE SITE EN LIVE**](https://meteo-transports.vercel.app/)
 
-![Schema](./public/schema-backend.png)
+Ce projet a été réalisé dans le cadre de la sélection pour le parcours **Concepteur Développeur d'Applications (spécialité DevOps)** chez Simplon. L'objectif était d'adapter une application météo existante pour un usage sur des bornes d'information dans les transports en commun.
 
-C'est l'API et le cœur backend de notre plateforme dédiée à l'univers du manga, la logique métier, l'architecture BDD, l'authentification, et la beta du système de transaction.
+## 🛠️ Améliorations et Choix Techniques
 
-👇 **POUR ALLER PLUS LOIN :** 👇
+### 1. Adaptation de la source de données (Backend)
+Le projet utilise désormais l'API **Open-Meteo**. Toute la logique est dans la route API (`/pages/api/data.js`) suivant le **Design Pattern "Adapter"** :
+- **Mapping des codes météo** : Création d'un dictionnaire de correspondance pour traduire les codes météo en descriptions françaises et icônes SVG.
+- **Indicateur Jour/Nuit** : Gestion dynamique des icônes (`d` pour le jour, `n` pour la nuit) via la propriété `is_day`.
+- **Unités & Contraintes** : Configuration de l'appel API pour recevoir le vent en **m/s** car par défaut en **km/s**.
 
-> ### 📖 Liens Importants
-> 
-> 📁 [**ACCÉDER AU DOSSIER COMPLET DU PROJET**](https://amine.works/download-dossier)
-> 
-> 📊 [**LA PRÉSENTATION POWERPOINT**](https://amine.works/download-presentation)
->
-> 💻 [**DÉCOUVRIR LE REPO FRONTEND (REACT)**](https://github.com/Amine03824/manga-sama-front) 
+**Point clé :** Cette approche a permis de migrer l'API sans modifier (hormis la langue avec mon big ctrl+F) les services existants (`converters.js`, `helpers.js`), garantissant ainsi la stabilité du code.
 
----
+### 2. Évolutions de l'Interface (Frontend)
+- **Localisation complète** : Traduction de l'intégralité des composants en français (Ressenti, Vitesse du vent, Humidité, etc.) pour s'adapter aux usagers.
+- **Mode Station Fixe** : Suppression du moteur de recherche conformément au brief. La ville est maintenant affichée via le fichier `config.json`.
 
-## ~~🌿 Last branch standing : feat/userUpload 📤~~
+- **Rafraîchissement automatique** : Implémentation d'un cycle de mise à jour toutes les heures via un `setInterval` avec gestion du nettoyage (cleanup) dans le hook `useEffect`.
 
-## ~~🌿 Last branch standing : feat/TRANSACTION+STRIPE 💳~~
-
-## ~~🌿 Last branch standing : feat/userCreation+authentication 🔐~~
-
-## ~~🌿 Last branch standing : fix/SERVER_CONFIG 🛠️~~
-
-## ~~🌿 Last branch standing : feat/API-ORGANISATION 🚀~~
-
-## ~~🌿 Last branch standing : feat/associations 🤝~~
-
-##  ~~🌿 Last branch standing : Setup Manga API + Database 📚 + 🗄️~~
-
-## ~~🌿 Last branch standing : Feat/SERVER-SETUP 🛠️ + 🚀~~
-
-## ~~🌿 Last branch standing : Feat/architecture 🏰~~
-
-![ESint](./public/S8wD4.gif)
-
-![tonio sur son ordi](https://media.tenor.com/o5ewu4vTJ58AAAAd/old-man-computer.gif)
+## ⚙️ Configuration
+La ville affichée est configurable dans le fichier `config.json` à la racine :
+```json
+{
+  "cityName": "Montreuil",
+  "countryCode": "FR",
+  "latitude": 48.866669,
+  "longitude": 2.43333
+}
